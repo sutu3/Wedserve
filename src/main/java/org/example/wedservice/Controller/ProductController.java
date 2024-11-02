@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/category")
+@RequestMapping("/product")
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
@@ -43,7 +43,7 @@ public class ProductController {
                 .build();
     }
     @PostMapping()
-    public ApiResponse<ProductResponse> postMaterial(@RequestBody ProductRequest request){
+    public ApiResponse<ProductResponse> postMaterial(@RequestBody ProductRequest request) throws AppException {
         return ApiResponse.<ProductResponse>builder()
                 .Result(productService.PostProduct(request))
                 .code(0)
