@@ -3,13 +3,9 @@ package org.example.wedservice.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.example.wedservice.Enum.StatusPurchase;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -17,16 +13,21 @@ import java.util.Set;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
-public class Purchase {
+public class Version {
     @Id
-            @GeneratedValue(strategy= GenerationType.UUID)
-    String idpurchase;
-    @Enumerated(EnumType.STRING)
-    StatusPurchase status;
+    @GeneratedValue(strategy= GenerationType.UUID)
+    String idversion;
+    int quantity_in_stock ;
     @Column(precision = 10, scale = 2)
-    BigDecimal alamoung;
-    @OneToMany(mappedBy="purchase")
-    List<Purchase_Item> items;
+    BigDecimal purchaseprice;
+    @Column(precision = 10, scale = 2)
+    BigDecimal saleprice;
+    @ManyToOne
+    @JoinColumn(name = "idproduct",nullable = false)
+    Product product;
     LocalDateTime createat;
     LocalDateTime updateat;
+    LocalDateTime deleteat;
+    boolean isdeleted;
+
 }

@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -20,8 +21,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.UUID)
     String idcategory;
     String name;
-    LocalDate createat;
-    LocalDate deleteat;
-    LocalDate updateat;
+    LocalDateTime createat;
+    LocalDateTime deleteat;
+    LocalDateTime updateat;
     boolean isdeleted=false;
 }

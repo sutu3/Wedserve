@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -21,6 +22,6 @@ public class Color {
     String idcolor;
     String colorname;
     String colorhex;
-    LocalDate deleteat;
+    LocalDateTime deleteat;
     boolean isdeleted=false;
 }

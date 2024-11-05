@@ -5,7 +5,10 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +19,8 @@ import java.time.LocalDate;
 public class PurchaseResponse implements Serializable {
     String id;
     String status;
-    String totalamoung;
-    LocalDate createat;
-    LocalDate updateat;
+    BigDecimal totalamoung;
+    LocalDateTime createat;
+    Set<Purchase_ItemResponse> items;
+    LocalDateTime updateat;
 }

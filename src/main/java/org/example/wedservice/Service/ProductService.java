@@ -20,6 +20,7 @@ import org.example.wedservice.Repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,33 +46,31 @@ public class ProductService {
             throw new AppException(ErrorCode.MATERIAL_NOT_FOUND);
         }
         Product product= productMapper.toProduct(request);
-        product.builder()
-                .createat(LocalDate.now())
-                .isdeleted(false)
-                .build();
         product.setMaterials(materialRepository.findFistByName(request.getMaterialName()));
         if(productRepository.existsByName(product.getName())){
             throw new AppException(ErrorCode.PRODUCT_IS_EXITED);
         }
-        product.builder()
+
+        return productMapper.toProductResponse(productRepository.save(
+                product.builder()
                 .isdeleted(false)
-                .createat(LocalDate.now())
-                .build();
-        return productMapper.toProductResponse(productRepository.save(product));
+                .createat(LocalDateTime.now())
+                .build()));
     }
     public ProductResponse PutProduct(String id, Product_Update update) throws AppException {
         Product product= productRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.PRODUCT_NOT_FOUND));
         productMapper.updateUpdate(product,update);
-        product.setUpdateat(LocalDate.now());
+        product.setUpdateat(LocalDateTime.now());
         return productMapper.toProductResponse(productRepository.save(product));
     }
     public void DeleteProduct(String id) throws AppException {
         Product product= productRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.PRODUCT_NOT_FOUND));
-        product.builder()
-                .deleteat(LocalDate.now())
+        productRepository.save(
+                product.builder()
+                .deleteat(LocalDateTime.now())
                 .isdeleted(true)
-                .build();
+                .build());
     }
 }

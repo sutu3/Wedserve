@@ -3,6 +3,9 @@ package org.example.wedservice.Form;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.example.wedservice.Dto.Response.Purchase_ItemResponse;
+
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -10,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Purchase_Update {
-    String totalamoung;
+    Double totalamoung;
     String status;
+    Set<Purchase_ItemResponse> items;
 }

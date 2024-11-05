@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -21,7 +22,7 @@ public class Description {
     String iddescription;
     String title;
     String description;
-    LocalDate deleteat;
-    LocalDate updateat;
+    LocalDateTime deleteat;
+    LocalDateTime updateat;
     boolean isdeleted=false;
 }

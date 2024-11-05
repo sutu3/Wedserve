@@ -16,6 +16,7 @@ import org.example.wedservice.Repository.ColorRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,8 @@ public class ColorService {
     private final ColorMapper colorMapper;
     ColorRepository repositoryColor;
     ColorMapper mappercolor;
+    private final ColorRepository colorRepository;
+
     public ColorResponse getbyid(String id) throws AppException {
         return mappercolor.toColorResponse(repositoryColor.findById(id)
                 .orElseThrow(()->new AppException(ErrorCode.COLOR_NOT_FOUND)));
@@ -53,9 +56,9 @@ public class ColorService {
     public void DeleteColor(String id) throws AppException {
         Color color=repositoryColor.findById(id)
                .orElseThrow(()->new AppException(ErrorCode.COLOR_NOT_FOUND));
-        color.builder()
-                .deleteat(LocalDate.now())
+        colorRepository.save(color.builder()
+                .deleteat(LocalDateTime.now())
                 .isdeleted(true)
-                .build();
+                .build());
     }
 }

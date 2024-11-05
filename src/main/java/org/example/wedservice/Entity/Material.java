@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.example.wedservice.Dto.Response.ProductResponse;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -22,8 +23,8 @@ public class Material {
     @OneToMany
     Set<Product> products;
     String durability;
-    LocalDate createat;
-    LocalDate deleteat;
-    LocalDate updateat;
+    LocalDateTime createat;
+    LocalDateTime deleteat;
+    LocalDateTime updateat;
     boolean isdeleted=false;
 }

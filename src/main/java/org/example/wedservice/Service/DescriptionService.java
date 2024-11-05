@@ -15,6 +15,7 @@ import org.example.wedservice.Repository.DescriptionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +48,7 @@ public class DescriptionService {
         Description description=descriptionRepository.
                 findById(id).orElseThrow(()->
                         new AppException(ErrorCode.DESCRIPTION_NOT_FOUND));
-                description.setUpdateat(LocalDate.now());
+                description.setUpdateat(LocalDateTime.now());
         descriptionMapper.updateDescription(description,update);
         return descriptionMapper.toDescriptionResponse(
                 descriptionRepository.save(description));
@@ -55,9 +56,10 @@ public class DescriptionService {
     public void DeleteDescription(String id) throws AppException {
         Description description=descriptionRepository.findById(id).
                 orElseThrow(() -> new AppException(ErrorCode.DESCRIPTION_NOT_FOUND));
-        description.builder()
-                .deleteat(LocalDate.now())
-                .isdeleted(true);
+        descriptionRepository.save(
+                description.builder()
+                .deleteat(LocalDateTime.now())
+                .isdeleted(true).build());
     }
 
 }

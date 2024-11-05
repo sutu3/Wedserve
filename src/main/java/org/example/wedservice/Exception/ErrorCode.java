@@ -28,6 +28,7 @@ public enum ErrorCode {
     PRODUCT_INVALID(1002,"Product Invalid", HttpStatus.BAD_REQUEST),
     PRODUCT_IS_EXITED(1003,"Product Is Exited", HttpStatus.BAD_REQUEST),
     PURCHASE_NOT_FOUND(1001,"Purgacy Not Found", HttpStatus.NOT_FOUND),
+    PURCHASE_ITEM_NOT_FOUND(1001,"Purgacy Not Found", HttpStatus.NOT_FOUND),
 
     UNCATEGORY(9999,"Uncategorized",HttpStatus.INTERNAL_SERVER_ERROR);
 

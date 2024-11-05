@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -17,8 +18,8 @@ public class MaterialResponse implements Serializable {
     String id;
     String name;
     String durability;
-    LocalDate createat;
-    LocalDate deleteat;
-    LocalDate updateat;
+    LocalDateTime createat;
+    LocalDateTime deleteat;
+    LocalDateTime updateat;
     boolean isdeleted;
 }

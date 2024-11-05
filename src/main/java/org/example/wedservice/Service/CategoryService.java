@@ -14,6 +14,7 @@ import org.example.wedservice.Repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,22 +39,22 @@ public class CategoryService {
              new AppException(ErrorCode.CATEGORY_IS_EXITED);
         }
         category.setIsdeleted(false);
-        category.setCreateat(LocalDate.now());
+        category.setCreateat(LocalDateTime.now());
         return categoryMapper.toCategoryResponse(categoryRepository.save(category));
     }
     public CategoryResponse putCategory(String id, Category_Update update) throws AppException {
         Category category=categoryRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.CATEGORY_NOT_FOUND));
         categoryMapper.updateCategory(category,update);
-        category.setUpdateat(LocalDate.now());
+        category.setUpdateat(LocalDateTime.now());
         return categoryMapper.toCategoryResponse(categoryRepository.save(category)) ;
     }
     public void DeleteCategory(String id) throws AppException {
         Category category=categoryRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.CATEGORY_NOT_FOUND));
-        category.builder()
-                .deleteat(LocalDate.now())
-                .isdeleted(true)
-                .build();
+       categoryRepository.save(category.builder()
+               .deleteat(LocalDateTime.now())
+               .isdeleted(true)
+               .build());
     }
 }

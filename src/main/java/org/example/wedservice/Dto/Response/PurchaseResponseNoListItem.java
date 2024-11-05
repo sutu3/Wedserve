@@ -1,16 +1,13 @@
 package org.example.wedservice.Dto.Response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -18,11 +15,10 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CategoryResponse implements Serializable {
+public class PurchaseResponseNoListItem implements Serializable {
     String id;
-    String name;
+    String status;
+    BigDecimal totalamoung;
     LocalDateTime createat;
-    LocalDateTime deleteat;
     LocalDateTime updateat;
-    boolean isdeleted;
 }

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Console;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,11 +45,11 @@ public class MaterialService {
         if(materialRepository.existsByName(material.getName())){
             throw new AppException(ErrorCode.MATERIAL_IS_EXITED);
         }
-        material.builder()
+        ;
+        return materialMapper.toMaterialResponse(materialRepository.save(material.builder()
                 .isdeleted(false)
-                .createat(LocalDate.now())
-                .build();
-        return materialMapper.toMaterialResponse(materialRepository.save(material));
+                .createat(LocalDateTime.now())
+                .build()));
     }
     public MaterialResponse GetbyName(MaterialRequest request) throws AppException {
         if(materialRepository.existsByName(request.getName())){
@@ -61,15 +62,16 @@ public class MaterialService {
         Material material= materialRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.MATERIAL_NOT_FOUND));
         materialMapper.updateMaterial(material,update);
-        material.setUpdateat(LocalDate.now());
+        material.setUpdateat(LocalDateTime.now());
         return materialMapper.toMaterialResponse(materialRepository.save(material));
     }
     public void DeleteMaterial(String id) throws AppException {
         Material material= materialRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.MATERIAL_NOT_FOUND));
-        material.builder()
-                .deleteat(LocalDate.now())
+        materialRepository.save(
+                material.builder()
+                .deleteat(LocalDateTime.now())
                 .isdeleted(true)
-                .build();
+                .build());
     }
 }

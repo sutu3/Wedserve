@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.example.wedservice.Dto.Response.MaterialResponse;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -20,11 +21,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     String idproduct;
     String name;
+    @OneToMany(mappedBy="product")
+    List<Version> version;
     @ManyToOne
     @JoinColumn(name = "idmaterial",nullable = false)
     Material materials;
-    LocalDate createat;
-    LocalDate deleteat;
-    LocalDate updateat;
+    LocalDateTime createat;
+    LocalDateTime deleteat;
+    LocalDateTime updateat;
     boolean isdeleted=false;
 }
