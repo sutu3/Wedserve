@@ -13,6 +13,6 @@ spring:
 server:
   port: 8080
 jwt:
-  signkey: "Vzb3FEvgbO1TKwwiLiM1avch/0nz660H9XN0nGDGd96OabGSsyJkrrESJouPNad8"
+  signedJWT: "aGUDzL2OOlvQcHJE5fpfzxv0w6MUZtFhF4IRZo+Tc/z5FnKjn8xxJvoot4OVj6LP"
   valid-duration: 3600
   refreshable-duration: 360000

@@ -29,7 +29,11 @@ public enum ErrorCode {
     PRODUCT_IS_EXITED(1003,"Product Is Exited", HttpStatus.BAD_REQUEST),
     PURCHASE_NOT_FOUND(1001,"Purgacy Not Found", HttpStatus.NOT_FOUND),
     PURCHASE_ITEM_NOT_FOUND(1001,"Purgacy Not Found", HttpStatus.NOT_FOUND),
-
+    USER_NOT_FOUND(1001,"User Not Found", HttpStatus.NOT_FOUND),
+    USERNAME_INVALID(1002,"Username Invalid",HttpStatus.BAD_REQUEST),
+    USERNAME_IS_EXITED(1003,"Username Is Exited", HttpStatus.BAD_REQUEST),
+    PASSWORD_INVALID(1004,"Password Invalid", HttpStatus.BAD_REQUEST),
+    UNAUTHENTICATED(1005,"Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNCATEGORY(9999,"Uncategorized",HttpStatus.INTERNAL_SERVER_ERROR);
 
     ErrorCode(int Code,String Message, HttpStatusCode sponse){
