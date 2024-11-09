@@ -32,14 +32,16 @@ public class ApplicationInitConfig {
             if(userRepository.findByUsername("admin").isEmpty()) {
                 HashSet<String> roles=new HashSet<String>();
                 roles.add(Role.ADMIN.name());
-                userRepository.save(User.builder()
-                                .username("admin")
-                                .password(passwordEncoder.encode("admin"))
-                                .roles(roles)
-                                .createdat(LocalDateTime.now())
-                                .isDeleted(false)
-                                .build());
+                User user=User.builder()
+                        .username("admin")
+                        .password(passwordEncoder.encode("admin"))
+                        .roles(roles)
+                        .createdat(LocalDateTime.now())
+                        .isDeleted(false)
+                        .build();
+                userRepository.save(user);
             }
+
             log.warn("user admin created with default password username is admin");
             };
     }

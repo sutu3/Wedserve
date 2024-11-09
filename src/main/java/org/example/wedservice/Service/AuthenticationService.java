@@ -47,7 +47,7 @@ public class AuthenticationService {
         if (!result) {
             throw new AppException(ErrorCode.UNAUTHENTICATED);
         }
-        var token = generateToken(request.getUsername());
+        var token = generateToken(user);
         return AuthenticationResponse.builder()
                 .token(token)
                 .authenticated(result)
@@ -72,7 +72,7 @@ public class AuthenticationService {
                 .issuer("dailun.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
-                .claim("custum","custum")
+                .claim("scope",customScope(user))
                 .build();
         Payload payload = new Payload(claimsSet.toJSONObject());
         JWSObject jwsObject = new JWSObject(header, payload);
@@ -80,7 +80,10 @@ public class AuthenticationService {
         return jwsObject.serialize();
     }
     private String customScope(User user){
-        StringJoiner springJoiner=new StringJoiner("")
-                if(CollectionUtils.isEmpty(user.getRoles()))
+        StringJoiner springJoiner=new StringJoiner("");
+                if(!CollectionUtils.isEmpty(user.getRoles())){
+                    user.getRoles().forEach(springJoiner::add);
+                }
+                return springJoiner.toString();
     }
 }

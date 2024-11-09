@@ -1,27 +1,44 @@
 package org.example.wedservice.Exception;
 
 import org.example.wedservice.Dto.Response.ApiResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
 
 public class GlobalException {
     public GlobalException(){
 
     }
     @ExceptionHandler(value=RuntimeException.class)
-    public ApiResponse<AppException> handleException(RuntimeException e) {
-        return ApiResponse.<AppException>builder()
-                .code(ErrorCode.UNCATEGORY.getCode())
+    ResponseEntity<ApiResponse> handleException(RuntimeException e) {
+        ApiResponse apiResponse=ApiResponse.builder()
                 .success(false)
-                .message(ErrorCode.UNCATEGORY.getMessage())
+                .code(ErrorCode.UNAUTHENTICATED.getCode())
+                .message(ErrorCode.UNAUTHENTICATED.getMessage())
                 .build();
+        return ResponseEntity.badRequest().body(apiResponse);
+
     }
     @ExceptionHandler(value=AppException.class)
-    public ApiResponse<AppException> handleAppException(AppException e) {
+    ResponseEntity<ApiResponse> handleAppException(AppException e) {
         ErrorCode errorCode = e.getErrorCode();
-    return ApiResponse.<AppException>builder()
+    return  ResponseEntity.status(errorCode.getStatus())
+            .body(ApiResponse.<AppException>builder()
             .message(errorCode.getMessage())
             .code(errorCode.getCode())
             .success(false)
-            .build();
+            .build());
+    }
+    @ExceptionHandler(value = AccessDeniedException.class)
+    ResponseEntity<ApiResponse> handleAccessDenied(AccessDeniedException e) {
+        ErrorCode error = ErrorCode.UNAUTHORIZED;
+        return ResponseEntity.status(error.getStatus())
+                .body(ApiResponse.<AppException>builder()
+                .message(error.getMessage())
+                .code(error.getCode())
+                .success(false)
+                .build())
+                ;
     }
 }

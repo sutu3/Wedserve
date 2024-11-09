@@ -34,6 +34,16 @@ public class UserController {
                 .message("Completed")
                 .build();
     }
+
+    @GetMapping("/myinfor")
+    public ApiResponse<UserResponse> getmyinfor() throws AppException {
+        return ApiResponse.<UserResponse>builder()
+                .Result(userService.getmyInfor())
+                .code(0)
+                .success(true)
+                .message("Completed")
+                .build();
+    }
     @GetMapping("/{id}")
     public ApiResponse<UserResponse> getbyId(@PathVariable String id) throws AppException {
         return ApiResponse.<UserResponse>builder()

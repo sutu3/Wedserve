@@ -17,6 +17,9 @@ import org.example.wedservice.Form.User_Update;
 import org.example.wedservice.Mapper.UserMapper;
 import org.example.wedservice.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -37,11 +40,19 @@ public class UserService {
 
     PasswordEncoder passwordEncoder;
 
+    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getall() {
         return userRepository.findAll().stream()
                 .map(mapper::toUserResponse).collect(Collectors.toList());
     }
 
+    public UserResponse getmyInfor() throws AppException {
+        var context= SecurityContextHolder.getContext();
+        String nameuser=context.getAuthentication().getName();
+        return mapper.toUserResponse(userRepository.findByUsername(nameuser)
+                .orElseThrow(()->new AppException(ErrorCode.USER_NOT_FOUND)));
+    }
+    @PostAuthorize("returnObject.username==authentication.name")
     public UserResponse getbyId(String id) throws AppException {
         return mapper.toUserResponse(userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND)));
@@ -57,6 +68,12 @@ public class UserService {
         role.add(Role.USER.name());
         return mapper.toUserResponse(userRepository
                 .save(user.builder()
+                        .username(request.getUsername())
+                        .email(request.getEmail())
+                        .dob(request.getDob())
+                        .fullname(request.getFullname())
+                        .phonenumber(request.getPhonenumber())
+                        .gender(request.getGender())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .createdat(LocalDateTime.now())
                 .isDeleted(false)

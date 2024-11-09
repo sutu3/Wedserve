@@ -11,9 +11,9 @@ import java.util.Set;
 @Entity
 @Data
 @AllArgsConstructor
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)

@@ -34,7 +34,8 @@ public enum ErrorCode {
     USERNAME_IS_EXITED(1003,"Username Is Exited", HttpStatus.BAD_REQUEST),
     PASSWORD_INVALID(1004,"Password Invalid", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(1005,"Unauthenticated", HttpStatus.UNAUTHORIZED),
-    UNCATEGORY(9999,"Uncategorized",HttpStatus.INTERNAL_SERVER_ERROR);
+    UNCATEGORY(9999,"Uncategorized",HttpStatus.INTERNAL_SERVER_ERROR),
+    UNAUTHORIZED(9998,"You don't as permission" ,HttpStatus.FORBIDDEN );
 
     ErrorCode(int Code,String Message, HttpStatusCode sponse){
         this.code = Code;
