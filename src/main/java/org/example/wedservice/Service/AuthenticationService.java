@@ -13,6 +13,7 @@ import org.example.wedservice.Dto.Request.AuthenticationRequest;
 import org.example.wedservice.Dto.Request.IntrospectRequest;
 import org.example.wedservice.Dto.Response.AuthenticationResponse;
 import org.example.wedservice.Dto.Response.IntrospectResponse;
+import org.example.wedservice.Entity.User;
 import org.example.wedservice.Exception.AppException;
 import org.example.wedservice.Exception.ErrorCode;
 import org.example.wedservice.Repository.UserRepository;
@@ -20,11 +21,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.StringJoiner;
 
 @Service
 @RequiredArgsConstructor
@@ -62,17 +65,22 @@ public class AuthenticationService {
                 .build();
     }
 
-    private String generateToken(String username) throws JOSEException {
+    private String generateToken(User user) throws JOSEException {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-                .subject(username)
+                .subject(user.getUsername())
                 .issuer("dailun.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()))
+                .claim("custum","custum")
                 .build();
         Payload payload = new Payload(claimsSet.toJSONObject());
         JWSObject jwsObject = new JWSObject(header, payload);
         jwsObject.sign(new MACSigner(SIGN_KEY.getBytes()));
         return jwsObject.serialize();
+    }
+    private String customScope(User user){
+        StringJoiner springJoiner=new StringJoiner("")
+                if(CollectionUtils.isEmpty(user.getRoles()))
     }
 }

@@ -4,9 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Data
@@ -21,9 +21,11 @@ public class User {
     String username;
     String password;
     String email;
+    Set<String> roles;
     String phonenumber;
     String fullname;
     String gender;
+    
     LocalDate dob;
     LocalDateTime createdat;
     LocalDateTime updatedat;

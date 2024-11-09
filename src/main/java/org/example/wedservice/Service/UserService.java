@@ -10,18 +10,18 @@ import org.example.wedservice.Dto.Response.SizeResponse;
 import org.example.wedservice.Dto.Response.UserResponse;
 import org.example.wedservice.Entity.Size;
 import org.example.wedservice.Entity.User;
+import org.example.wedservice.Enum.Role;
 import org.example.wedservice.Exception.AppException;
 import org.example.wedservice.Exception.ErrorCode;
-import org.example.wedservice.Form.Size_Update;
 import org.example.wedservice.Form.User_Update;
-import org.example.wedservice.Mapper.SizeMapper;
 import org.example.wedservice.Mapper.UserMapper;
 import org.example.wedservice.Repository.UserRepository;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +33,9 @@ public class UserService {
 
     UserRepository userRepository;
     UserMapper mapper;
+
+
+    PasswordEncoder passwordEncoder;
 
     public List<UserResponse> getall() {
         return userRepository.findAll().stream()
@@ -50,12 +53,14 @@ public class UserService {
             throw new AppException(ErrorCode.USERNAME_IS_EXITED);
         }
         User user = mapper.toUser(request);
-        PasswordEncoder passwordEncoder=new BCryptPasswordEncoder(10);
+        HashSet<String> role=new HashSet<String>();
+        role.add(Role.USER.name());
         return mapper.toUserResponse(userRepository
                 .save(user.builder()
                 .password(passwordEncoder.encode(request.getPassword()))
                 .createdat(LocalDateTime.now())
                 .isDeleted(false)
+                .roles(role)
                 .build()));
     }
 
