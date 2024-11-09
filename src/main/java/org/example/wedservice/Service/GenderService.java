@@ -29,7 +29,7 @@ public class GenderService {
                 .stream().map(genderMapper::toGenderResponse)
                 .collect(Collectors.toList());
     }
-    public GenderResponse Postgender(GenderRequest request) throws AppException {
+    public GenderResponse Postgender(GenderRequest request){
         if(genderRepository.existsByGender(request.getGender())){
             throw new AppException(ErrorCode.GENDER_IS_EXITED);
         }

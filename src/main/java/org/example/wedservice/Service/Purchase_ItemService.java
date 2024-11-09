@@ -44,13 +44,13 @@ public class Purchase_ItemService {
                 .collect(Collectors.toList());
     }
 
-    public Purchase_ItemResponse Getbyid(String id) throws AppException {
+    public Purchase_ItemResponse Getbyid(String id){
         return purchaseItemMapper.toPurchase_ItemResponse(purchaseItemRepository
                 .findById(id).
                 orElseThrow(() -> new AppException(ErrorCode.PURCHASE_NOT_FOUND)));
     }
 
-    public Purchase_ItemResponse PostPurchase_item(Purchase_ItemRequest request) throws AppException {
+    public Purchase_ItemResponse PostPurchase_item(Purchase_ItemRequest request) {
         Purchase_Item purchaseItem = purchaseItemMapper.toPurchaseItem(request);
         Purchase purchase = purchaseRepository.findById(
                 request.getIdpurchase()).orElseThrow(() -> new AppException
@@ -81,7 +81,7 @@ public class Purchase_ItemService {
         return itemresponse;
     }
 
-    public Purchase_ItemResponse putPurchase_Item(String id, Purchase_Item_Update update) throws AppException {
+    public Purchase_ItemResponse putPurchase_Item(String id, Purchase_Item_Update update){
         Purchase_Item purchase_item = purchaseItemRepository.findById(id).
                 orElseThrow(() -> new AppException(ErrorCode.PURCHASE_ITEM_NOT_FOUND));
         purchaseItemMapper.updatePurchase_Item(purchase_item, update);
@@ -89,7 +89,7 @@ public class Purchase_ItemService {
         return purchaseItemMapper.toPurchase_ItemResponse(
                 purchaseItemRepository.save(purchase_item));
     }
-    public void DeletePurchase_Item(String id) throws AppException {
+    public void DeletePurchase_Item(String id) {
         if (!purchaseRepository.existsById(id)) {
             throw new AppException(ErrorCode.PURCHASE_NOT_FOUND);
         }

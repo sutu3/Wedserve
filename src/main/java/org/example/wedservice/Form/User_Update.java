@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.example.wedservice.Dto.Response.Purchase_ItemResponse;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -21,4 +22,5 @@ public class User_Update {
     String fullname;
     String gender;
     LocalDate dob;
+    List<String> roles;
 }

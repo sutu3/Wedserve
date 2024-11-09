@@ -31,7 +31,7 @@ public class GenderController {
                 .build();
     }
     @PostMapping
-    public ApiResponse<GenderResponse> postGender(GenderRequest request) throws AppException {
+    public ApiResponse<GenderResponse> postGender(GenderRequest request) {
         return ApiResponse.<GenderResponse>builder()
                 .Result(genderService.Postgender(request))
                 .code(0)

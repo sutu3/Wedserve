@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping("/myinfor")
-    public ApiResponse<UserResponse> getmyinfor() throws AppException {
+    public ApiResponse<UserResponse> getmyinfor(){
         return ApiResponse.<UserResponse>builder()
                 .Result(userService.getmyInfor())
                 .code(0)
@@ -45,7 +45,7 @@ public class UserController {
                 .build();
     }
     @GetMapping("/{id}")
-    public ApiResponse<UserResponse> getbyId(@PathVariable String id) throws AppException {
+    public ApiResponse<UserResponse> getbyId(@PathVariable String id) {
         return ApiResponse.<UserResponse>builder()
                 .Result(userService.getbyId(id))
                 .code(0)
@@ -54,7 +54,7 @@ public class UserController {
                 .build();
     }
     @PostMapping
-    public ApiResponse<UserResponse> postSize(@RequestBody @Valid UserRequest request) throws AppException {
+    public ApiResponse<UserResponse> postSize(@RequestBody @Valid UserRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .Result(userService.PostUser(request))
                 .code(0)
@@ -64,7 +64,7 @@ public class UserController {
     }
     @PutMapping("/{id}")
     public ApiResponse<UserResponse> putSize(@PathVariable String id, @RequestBody User_Update update)
-            throws AppException {
+            {
         return ApiResponse.<UserResponse>builder()
                 .Result(userService.putUser(id, update))
                 .code(0)
@@ -73,7 +73,7 @@ public class UserController {
                 .build();
     }
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteSize(@PathVariable String id) throws AppException {
+    public ApiResponse<Void> deleteSize(@PathVariable String id){
         userService.deleteUser(id);
         return ApiResponse.<Void>builder()
                 .message("Delete Completed")

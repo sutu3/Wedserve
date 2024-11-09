@@ -21,7 +21,7 @@ public class UserResponse {
     String fullname;
     String gender;
     LocalDate dob;
-    Set<String> roles;
+    Set<RoleResponse> roles;
     LocalDateTime createdat;
     LocalDateTime updatedat;
     LocalDateTime deletedat;

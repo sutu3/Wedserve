@@ -29,7 +29,7 @@ public class CategoryService {
         return categoryRepository.findAll().stream().map(categoryMapper::toCategoryResponse)
                 .collect(Collectors.toList());
     }
-    public CategoryResponse getbyid(String id) throws AppException {
+    public CategoryResponse getbyid(String id) {
         return categoryMapper.toCategoryResponse(categoryRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.CATEGORY_NOT_FOUND)));
     }
@@ -42,19 +42,18 @@ public class CategoryService {
         category.setCreateat(LocalDateTime.now());
         return categoryMapper.toCategoryResponse(categoryRepository.save(category));
     }
-    public CategoryResponse putCategory(String id, Category_Update update) throws AppException {
+    public CategoryResponse putCategory(String id, Category_Update update)  {
         Category category=categoryRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.CATEGORY_NOT_FOUND));
         categoryMapper.updateCategory(category,update);
         category.setUpdateat(LocalDateTime.now());
         return categoryMapper.toCategoryResponse(categoryRepository.save(category)) ;
     }
-    public void DeleteCategory(String id) throws AppException {
+    public void DeleteCategory(String id) {
         Category category=categoryRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.CATEGORY_NOT_FOUND));
-       categoryRepository.save(category.builder()
-               .deleteat(LocalDateTime.now())
-               .isdeleted(true)
-               .build());
+        category.setIsdeleted(true);
+        category.setDeleteat(LocalDateTime.now());
+       categoryRepository.save(category);
     }
 }

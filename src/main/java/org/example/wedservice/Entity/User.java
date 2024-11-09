@@ -21,7 +21,8 @@ public class User {
     String username;
     String password;
     String email;
-    Set<String> roles;
+    @ManyToMany
+    Set<Role> roles;
     String phonenumber;
     String fullname;
     String gender;

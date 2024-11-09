@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 
 @Data
 @NoArgsConstructor
-public class AppException extends Exception{
+public class AppException extends RuntimeException{
 
     public AppException(ErrorCode errorCode) {
         super(errorCode.getMessage());

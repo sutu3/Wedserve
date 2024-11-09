@@ -34,7 +34,7 @@ public class DescriptionController {
                 .build();
     }
     @GetMapping("/{id}")
-    public ApiResponse<DescriptionResponse> getById(@PathVariable String id) throws AppException {
+    public ApiResponse<DescriptionResponse> getById(@PathVariable String id) {
         return ApiResponse.<DescriptionResponse>builder()
                 .Result(descriptionService.getById(id))
                 .message("Completed")
@@ -43,7 +43,7 @@ public class DescriptionController {
                 .build();
     }
     @PostMapping
-    public ApiResponse<DescriptionResponse> postColor(@RequestBody DescriptionRequest request) throws AppException {
+    public ApiResponse<DescriptionResponse> postColor(@RequestBody DescriptionRequest request) {
         return ApiResponse.<DescriptionResponse>builder()
                 .Result(descriptionService.PostDescription(request))
                 .message("Completed")
@@ -53,7 +53,7 @@ public class DescriptionController {
     }
     @PutMapping("/{id}")
     public ApiResponse<DescriptionResponse> putColor(@PathVariable String id, @RequestBody Description_Update update)
-            throws AppException {
+           {
         return ApiResponse.<DescriptionResponse>builder()
                 .Result(descriptionService.PutDescription(id, update))
                 .message("Completed")
@@ -62,7 +62,7 @@ public class DescriptionController {
                 .build();
     }
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteDescription(@PathVariable String id) throws AppException {
+    public ApiResponse<Void> deleteDescription(@PathVariable String id) {
         descriptionService.DeleteDescription(id);
         return ApiResponse.<Void>builder()
                 .message("Delete Completed")

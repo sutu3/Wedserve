@@ -36,11 +36,11 @@ public class ProductService {
                 .map(productMapper::toProductResponse)
                 .collect(Collectors.toList());
     }
-    public ProductResponse Getbyid(String id) throws AppException {
+    public ProductResponse Getbyid(String id){
         return productMapper.toProductResponse(productRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.PRODUCT_NOT_FOUND)));
     }
-    public ProductResponse PostProduct(ProductRequest request) throws AppException {
+    public ProductResponse PostProduct(ProductRequest request){
         if(!materialRepository.existsByName(request.getMaterialName()))
         {
             throw new AppException(ErrorCode.MATERIAL_NOT_FOUND);
@@ -57,20 +57,18 @@ public class ProductService {
                 .createat(LocalDateTime.now())
                 .build()));
     }
-    public ProductResponse PutProduct(String id, Product_Update update) throws AppException {
+    public ProductResponse PutProduct(String id, Product_Update update){
         Product product= productRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.PRODUCT_NOT_FOUND));
         productMapper.updateUpdate(product,update);
         product.setUpdateat(LocalDateTime.now());
         return productMapper.toProductResponse(productRepository.save(product));
     }
-    public void DeleteProduct(String id) throws AppException {
+    public void DeleteProduct(String id){
         Product product= productRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.PRODUCT_NOT_FOUND));
-        productRepository.save(
-                product.builder()
-                .deleteat(LocalDateTime.now())
-                .isdeleted(true)
-                .build());
+        product.setDeleteat(LocalDateTime.now());
+        product.setIsdeleted(true);
+        productRepository.save(product);
     }
 }

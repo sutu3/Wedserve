@@ -15,6 +15,7 @@ import org.example.wedservice.Exception.AppException;
 import org.example.wedservice.Exception.ErrorCode;
 import org.example.wedservice.Form.User_Update;
 import org.example.wedservice.Mapper.UserMapper;
+import org.example.wedservice.Repository.RoleRepository;
 import org.example.wedservice.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -36,7 +37,7 @@ public class UserService {
 
     UserRepository userRepository;
     UserMapper mapper;
-
+    RoleRepository roleRepository;
 
     PasswordEncoder passwordEncoder;
 
@@ -46,26 +47,28 @@ public class UserService {
                 .map(mapper::toUserResponse).collect(Collectors.toList());
     }
 
-    public UserResponse getmyInfor() throws AppException {
+    public UserResponse getmyInfor() {
         var context= SecurityContextHolder.getContext();
         String nameuser=context.getAuthentication().getName();
         return mapper.toUserResponse(userRepository.findByUsername(nameuser)
                 .orElseThrow(()->new AppException(ErrorCode.USER_NOT_FOUND)));
     }
     @PostAuthorize("returnObject.username==authentication.name")
-    public UserResponse getbyId(String id) throws AppException {
+    public UserResponse getbyId(String id) {
         return mapper.toUserResponse(userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND)));
     }
 
-    public UserResponse PostUser(UserRequest request) throws AppException {
+    public UserResponse PostUser(UserRequest request) {
 
         if (userRepository.existsByUsername(request.getUsername())) {
             throw new AppException(ErrorCode.USERNAME_IS_EXITED);
         }
         User user = mapper.toUser(request);
         HashSet<String> role=new HashSet<String>();
+/*
         role.add(Role.USER.name());
+*/
         return mapper.toUserResponse(userRepository
                 .save(user.builder()
                         .username(request.getUsername())
@@ -77,22 +80,23 @@ public class UserService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .createdat(LocalDateTime.now())
                 .isDeleted(false)
-                .roles(role)
+                /*.roles(role)*/
                 .build()));
     }
 
-    public UserResponse putUser(String id, User_Update update) throws AppException {
+    public UserResponse putUser(String id, User_Update update) {
         User userupdate = userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        var role=roleRepository.findAllById(update.getRoles());
         mapper.updateUser(userupdate, update);
+        userupdate.setUpdatedat(LocalDateTime.now());
+        userupdate.setPassword(passwordEncoder.encode(update.getPassword()));
+        userupdate.setRoles(new HashSet<>(role));
         return mapper.toUserResponse(userRepository
-                .save(userupdate.builder()
-                .updatedat(LocalDateTime.now())
-                .isDeleted(false)
-                .build()));
+                .save(userupdate));
     }
 
-    public void deleteUser(String id) throws AppException {
+    public void deleteUser(String id){
         User user=userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         userRepository

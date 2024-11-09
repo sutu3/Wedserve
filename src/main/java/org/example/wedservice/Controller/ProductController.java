@@ -34,7 +34,7 @@ public class ProductController {
                 .build();
     }
     @GetMapping("/{id}")
-    public ApiResponse<ProductResponse> getById(@PathVariable String id) throws AppException {
+    public ApiResponse<ProductResponse> getById(@PathVariable String id) {
         return ApiResponse.<ProductResponse>builder()
                 .Result(productService.Getbyid(id))
                 .code(0)
@@ -43,7 +43,7 @@ public class ProductController {
                 .build();
     }
     @PostMapping()
-    public ApiResponse<ProductResponse> postMaterial(@RequestBody ProductRequest request) throws AppException {
+    public ApiResponse<ProductResponse> postMaterial(@RequestBody ProductRequest request){
         return ApiResponse.<ProductResponse>builder()
                 .Result(productService.PostProduct(request))
                 .code(0)
@@ -53,7 +53,7 @@ public class ProductController {
     }
     @PutMapping("/{id}")
     public ApiResponse<ProductResponse> putMaterial(@PathVariable String id, @RequestBody Product_Update update)
-            throws AppException {
+           {
         return ApiResponse.<ProductResponse>builder()
                 .Result(productService.PutProduct(id,update))
                 .message("Completed")
@@ -62,7 +62,7 @@ public class ProductController {
                 .build();
     }
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteCategory(@PathVariable String id) throws AppException {
+    public ApiResponse<Void> deleteCategory(@PathVariable String id) {
         productService.DeleteProduct(id);
         return ApiResponse.<Void>builder()
                .message("Delete Completed")

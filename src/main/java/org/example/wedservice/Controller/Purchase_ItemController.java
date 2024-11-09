@@ -33,7 +33,7 @@ public class Purchase_ItemController {
                 .build();
     }
     @GetMapping("/{id}")
-    public ApiResponse<Purchase_ItemResponse> getById(@PathVariable String id) throws AppException {
+    public ApiResponse<Purchase_ItemResponse> getById(@PathVariable String id) {
         return ApiResponse.<Purchase_ItemResponse>builder()
                 .Result(purchaseItemService.Getbyid(id))
                 .code(0)
@@ -42,7 +42,7 @@ public class Purchase_ItemController {
                 .build();
     }
     @PostMapping()
-    public ApiResponse<Purchase_ItemResponse> postMaterial(@RequestBody Purchase_ItemRequest request) throws AppException {
+    public ApiResponse<Purchase_ItemResponse> postMaterial(@RequestBody Purchase_ItemRequest request){
         return ApiResponse.<Purchase_ItemResponse>builder()
                 .Result(purchaseItemService.PostPurchase_item(request))
                 .code(0)
@@ -52,7 +52,7 @@ public class Purchase_ItemController {
     }
     @PutMapping("/{id}")
     public ApiResponse<Purchase_ItemResponse> putPurchase(@PathVariable String id, @RequestBody Purchase_Item_Update update)
-            throws AppException {
+           {
         return ApiResponse.<Purchase_ItemResponse>builder()
                 .Result(purchaseItemService.putPurchase_Item(id,update))
                 .message("Completed")
@@ -61,7 +61,7 @@ public class Purchase_ItemController {
                 .build();
     }
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteCategory(@PathVariable String id) throws AppException {
+    public ApiResponse<Void> deleteCategory(@PathVariable String id){
         purchaseItemService.DeletePurchase_Item(id);
         return ApiResponse.<Void>builder()
                 .message("Delete Completed")

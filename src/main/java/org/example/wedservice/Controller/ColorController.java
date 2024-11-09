@@ -32,7 +32,7 @@ public class ColorController {
                 .build();
     }
     @GetMapping("/{id}")
-    public ApiResponse<ColorResponse> getById(@PathVariable String id) throws AppException {
+    public ApiResponse<ColorResponse> getById(@PathVariable String id) {
         return ApiResponse.<ColorResponse>builder()
                 .Result(serviceColor.getbyid(id))
                 .message("Completed")
@@ -41,7 +41,7 @@ public class ColorController {
                 .build();
     }
     @PostMapping
-    public ApiResponse<ColorResponse> postColor(@RequestBody ColorRequest request) throws AppException {
+    public ApiResponse<ColorResponse> postColor(@RequestBody ColorRequest request) {
         return ApiResponse.<ColorResponse>builder()
                 .Result(serviceColor.PostColor(request))
                 .message("Completed")
@@ -51,7 +51,7 @@ public class ColorController {
     }
     @PutMapping("/{id}")
     public ApiResponse<ColorResponse> putColor(@PathVariable String id, @RequestBody Color_Update update)
-            throws AppException {
+            {
         return ApiResponse.<ColorResponse>builder()
                 .Result(serviceColor.PutColor(id, update))
                 .message("Completed")
@@ -60,7 +60,7 @@ public class ColorController {
                 .build();
     }
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteColor(@PathVariable String id) throws AppException {
+    public ApiResponse<Void> deleteColor(@PathVariable String id) {
         serviceColor.DeleteColor(id);
         return ApiResponse.<Void>builder()
                 .message("Delete Completed")

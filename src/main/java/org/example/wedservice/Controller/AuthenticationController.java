@@ -29,7 +29,7 @@ public class AuthenticationController {
 
     @PostMapping("/token")
     public ApiResponse<AuthenticationResponse> authentication(@RequestBody AuthenticationRequest request)
-            throws AppException, JOSEException {
+            throws  JOSEException {
         var result=authenticationService.isAuthenticated(request);
         return ApiResponse.<AuthenticationResponse>builder()
                 .Result(result)
@@ -39,7 +39,7 @@ public class AuthenticationController {
     }
     @PostMapping("/introspect")
     public ApiResponse<IntrospectResponse> authentication(@RequestBody IntrospectRequest request)
-            throws AppException, JOSEException, ParseException {
+            throws  JOSEException, ParseException {
         var result=authenticationService.instrospect(request);
         return ApiResponse.<IntrospectResponse>builder()
                 .Result(result)

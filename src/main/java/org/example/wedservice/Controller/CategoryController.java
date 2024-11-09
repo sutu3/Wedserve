@@ -31,7 +31,7 @@ public class CategoryController {
                 .build();
     }
     @GetMapping("/{id}")
-    public ApiResponse<CategoryResponse> getById(@PathVariable String id) throws AppException {
+    public ApiResponse<CategoryResponse> getById(@PathVariable String id) {
         return ApiResponse.<CategoryResponse>builder()
                 .Result(categoryService.getbyid(id))
                 .code(0)
@@ -50,7 +50,7 @@ public class CategoryController {
     }
     @PutMapping("/{id}")
     public ApiResponse<CategoryResponse> PutCategory(@PathVariable String id, @RequestBody Category_Update update)
-            throws AppException {
+            {
         return ApiResponse.<CategoryResponse>builder()
                 .Result(categoryService.putCategory(id,update))
                 .message("Completed")
@@ -59,7 +59,7 @@ public class CategoryController {
                 .build();
     }
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteCategory(@PathVariable String id) throws AppException {
+    public ApiResponse<Void> deleteCategory(@PathVariable String id) {
         categoryService.DeleteCategory(id);
         return ApiResponse.<Void>builder()
                .message("Delete Completed")

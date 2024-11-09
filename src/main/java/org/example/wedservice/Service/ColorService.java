@@ -30,7 +30,7 @@ public class ColorService {
     ColorMapper mappercolor;
     private final ColorRepository colorRepository;
 
-    public ColorResponse getbyid(String id) throws AppException {
+    public ColorResponse getbyid(String id){
         return mappercolor.toColorResponse(repositoryColor.findById(id)
                 .orElseThrow(()->new AppException(ErrorCode.COLOR_NOT_FOUND)));
     }
@@ -39,7 +39,7 @@ public class ColorService {
                 .map(colorMapper::toColorResponse)
                 .collect(Collectors.toList());
     }
-    public ColorResponse PostColor(ColorRequest request) throws AppException {
+    public ColorResponse PostColor(ColorRequest request){
         Color color=mappercolor.toColor(request);
         if(repositoryColor.existsByColorhex(request.getColorhex())
                 ||repositoryColor.existsByColorname(request.getColorname())){
@@ -47,18 +47,17 @@ public class ColorService {
         }
         return mappercolor.toColorResponse(repositoryColor.save(color));
     }
-    public ColorResponse PutColor(String id,Color_Update update) throws AppException {
+    public ColorResponse PutColor(String id,Color_Update update)  {
         Color color=repositoryColor.findById(id)
                .orElseThrow(()->new AppException(ErrorCode.COLOR_NOT_FOUND));
         mappercolor.updateColor(color,update);
         return mappercolor.toColorResponse(repositoryColor.save(color));
     }
-    public void DeleteColor(String id) throws AppException {
+    public void DeleteColor(String id) {
         Color color=repositoryColor.findById(id)
                .orElseThrow(()->new AppException(ErrorCode.COLOR_NOT_FOUND));
-        colorRepository.save(color.builder()
-                .deleteat(LocalDateTime.now())
-                .isdeleted(true)
-                .build());
+        color.setDeleteat(LocalDateTime.now());
+        color.setIsdeleted(true);
+        colorRepository.save(color);
     }
 }

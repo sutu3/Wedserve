@@ -34,7 +34,12 @@ public enum ErrorCode {
     USERNAME_IS_EXITED(1003,"Username Is Exited", HttpStatus.BAD_REQUEST),
     PASSWORD_INVALID(1004,"Password Invalid", HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(1005,"Unauthenticated", HttpStatus.UNAUTHORIZED),
-    UNCATEGORY(9999,"Uncategorized",HttpStatus.INTERNAL_SERVER_ERROR),
+    UNCATEGORIZED(9999,"Uncategorized",HttpStatus.INTERNAL_SERVER_ERROR),
+    INVALID_KEY(1001,"Invalid key",HttpStatus.BAD_REQUEST),
+    PERMISSION_IS_EXITED(1001,"Permission Is Exited", HttpStatus.BAD_REQUEST),
+    PERMISSION_NOT_FOUND(1001,"Permission Not Found", HttpStatus.NOT_FOUND),
+    ROLE_IS_EXITED(1001,"Role Is Exited", HttpStatus.BAD_REQUEST),
+    ROLE_NOT_FOUND(1001,"Role Not Found", HttpStatus.NOT_FOUND),
     UNAUTHORIZED(9998,"You don't as permission" ,HttpStatus.FORBIDDEN );
 
     ErrorCode(int Code,String Message, HttpStatusCode sponse){

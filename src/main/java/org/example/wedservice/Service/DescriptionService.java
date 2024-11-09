@@ -32,7 +32,7 @@ public class DescriptionService {
                 .stream().map(descriptionMapper::toDescriptionResponse)
                 .collect(Collectors.toUnmodifiableList());
     }
-    public DescriptionResponse getById(String id) throws AppException {
+    public DescriptionResponse getById(String id){
         return descriptionMapper.toDescriptionResponse(descriptionRepository
                 .findById(id).orElseThrow(() ->
                         new AppException(ErrorCode.DESCRIPTION_NOT_FOUND)));
@@ -43,7 +43,7 @@ public class DescriptionService {
                 toDescriptionResponse(descriptionRepository.save(description));
     }
     public DescriptionResponse PutDescription(String id, Description_Update update)
-            throws AppException {
+           {
 
         Description description=descriptionRepository.
                 findById(id).orElseThrow(()->
@@ -53,13 +53,12 @@ public class DescriptionService {
         return descriptionMapper.toDescriptionResponse(
                 descriptionRepository.save(description));
     }
-    public void DeleteDescription(String id) throws AppException {
+    public void DeleteDescription(String id) {
         Description description=descriptionRepository.findById(id).
                 orElseThrow(() -> new AppException(ErrorCode.DESCRIPTION_NOT_FOUND));
-        descriptionRepository.save(
-                description.builder()
-                .deleteat(LocalDateTime.now())
-                .isdeleted(true).build());
+        description.setDeleteat(LocalDateTime.now());
+        description.setIsdeleted(true);
+        descriptionRepository.save(description);
     }
 
 }

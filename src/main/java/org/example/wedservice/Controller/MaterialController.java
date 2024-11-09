@@ -31,7 +31,7 @@ public class MaterialController {
                 .build();
     }
     @GetMapping("/name")
-    public ApiResponse<MaterialResponse> getByName(@RequestBody MaterialRequest request) throws AppException {
+    public ApiResponse<MaterialResponse> getByName(@RequestBody MaterialRequest request) {
         return ApiResponse.<MaterialResponse>builder()
                 .Result(materialService.GetbyName(request))
                 .code(0)
@@ -40,7 +40,7 @@ public class MaterialController {
                 .build();
     }
     @GetMapping("/{id}")
-    public ApiResponse<MaterialResponse> getById(@PathVariable String id) throws AppException {
+    public ApiResponse<MaterialResponse> getById(@PathVariable String id){
         return ApiResponse.<MaterialResponse>builder()
                 .Result(materialService.Getbyid(id))
                 .code(0)
@@ -49,7 +49,7 @@ public class MaterialController {
                 .build();
     }
     @PostMapping()
-    public ApiResponse<MaterialResponse> postMaterial(@RequestBody MaterialRequest request) throws AppException {
+    public ApiResponse<MaterialResponse> postMaterial(@RequestBody MaterialRequest request){
         return ApiResponse.<MaterialResponse>builder()
                 .Result(materialService.PostMaterial(request))
                 .code(0)
@@ -59,7 +59,7 @@ public class MaterialController {
     }
     @PutMapping("/{id}")
     public ApiResponse<MaterialResponse> putMaterial(@PathVariable String id, @RequestBody Material_Update update)
-            throws AppException {
+             {
         return ApiResponse.<MaterialResponse>builder()
                 .Result(materialService.PutMaterial(id,update))
                 .message("Completed")
@@ -68,7 +68,7 @@ public class MaterialController {
                 .build();
     }
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteCategory(@PathVariable String id) throws AppException {
+    public ApiResponse<Void> deleteCategory(@PathVariable String id)  {
         materialService.DeleteMaterial(id);
         return ApiResponse.<Void>builder()
                .message("Delete Completed")

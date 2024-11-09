@@ -34,7 +34,7 @@ public class PurchaseController {
                 .build();
     }
     @GetMapping("/{id}")
-    public ApiResponse<PurchaseResponse> getById(@PathVariable String id) throws AppException {
+    public ApiResponse<PurchaseResponse> getById(@PathVariable String id){
         return ApiResponse.<PurchaseResponse>builder()
                 .Result(purchaseService.Getbyid(id))
                 .code(0)
@@ -43,7 +43,7 @@ public class PurchaseController {
                 .build();
     }
     @PostMapping()
-    public ApiResponse<PurchaseResponse> postMaterial(@RequestBody PurchaseRequest request) throws AppException {
+    public ApiResponse<PurchaseResponse> postMaterial(@RequestBody PurchaseRequest request){
         return ApiResponse.<PurchaseResponse>builder()
                 .Result(purchaseService.PostPurchase(request))
                 .code(0)
@@ -53,7 +53,7 @@ public class PurchaseController {
     }
     @PutMapping("/{id}")
     public ApiResponse<PurchaseResponse> putPurchase(@PathVariable String id, @RequestBody Purchase_Update update)
-            throws AppException {
+           {
         return ApiResponse.<PurchaseResponse>builder()
                 .Result(purchaseService.putPurchase(id,update))
                 .message("Completed")

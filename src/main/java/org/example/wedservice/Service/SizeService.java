@@ -29,25 +29,25 @@ public class SizeService {
         return sizerepository.findAll().stream()
                 .map(mapper::toSizeResponse).collect(Collectors.toList());
     }
-    public  SizeResponse getbyId(String id) throws AppException {
+    public  SizeResponse getbyId(String id){
 
         return mapper.toSizeResponse(sizerepository.findById(id)
                 .orElseThrow(()->new AppException(ErrorCode.SIZE_NOT_FOUND)));
     }
-    public SizeResponse PostSize(SizeRequest request) throws AppException {
+    public SizeResponse PostSize(SizeRequest request){
         Size size=mapper.toSize(request);
         if(sizerepository.existsBySizename(request.getSizename())){
             throw new AppException(ErrorCode.SIZE_IS_EXITED);
         }
         return mapper.toSizeResponse(sizerepository.save(size));
     }
-    public SizeResponse putSize(String id, Size_Update update) throws AppException {
+    public SizeResponse putSize(String id, Size_Update update){
         Size sizeupdate=sizerepository.findById(id)
                 .orElseThrow(()->new AppException(ErrorCode.SIZE_NOT_FOUND));
         mapper.UpdataSizename(sizeupdate,update);
         return mapper.toSizeResponse(sizerepository.save(sizeupdate));
     }
-    public void deleteSize(String id) throws AppException {
+    public void deleteSize(String id) {
         sizerepository.findById(id)
                 .orElseThrow(()->new AppException(ErrorCode.SIZE_NOT_FOUND));
         sizerepository.deleteById(id);

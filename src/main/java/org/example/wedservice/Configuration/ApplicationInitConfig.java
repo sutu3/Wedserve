@@ -35,7 +35,9 @@ public class ApplicationInitConfig {
                 User user=User.builder()
                         .username("admin")
                         .password(passwordEncoder.encode("admin"))
+/*
                         .roles(roles)
+*/
                         .createdat(LocalDateTime.now())
                         .isDeleted(false)
                         .build();

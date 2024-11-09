@@ -35,11 +35,11 @@ public class MaterialService {
         return materialRepository.findAll().stream().map(materialMapper::toMaterialResponse)
                 .collect(Collectors.toList());
     }
-    public MaterialResponse Getbyid(String id) throws AppException {
+    public MaterialResponse Getbyid(String id){
         return materialMapper.toMaterialResponse(materialRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.MATERIAL_NOT_FOUND)));
     }
-    public MaterialResponse PostMaterial(MaterialRequest request) throws AppException {
+    public MaterialResponse PostMaterial(MaterialRequest request){
         Material material= materialMapper.toMaterial(request);
         log.info(materialRepository.existsByName(material.getName())?"dung":"sai");
         if(materialRepository.existsByName(material.getName())){
@@ -51,27 +51,25 @@ public class MaterialService {
                 .createat(LocalDateTime.now())
                 .build()));
     }
-    public MaterialResponse GetbyName(MaterialRequest request) throws AppException {
+    public MaterialResponse GetbyName(MaterialRequest request){
         if(materialRepository.existsByName(request.getName())){
             throw new AppException(ErrorCode.MATERIAL_NOT_FOUND);
         }
         return materialMapper.toMaterialResponse(
                 materialRepository.findFistByName(request.getName()));
     }
-    public MaterialResponse PutMaterial(String id, Material_Update update) throws AppException {
+    public MaterialResponse PutMaterial(String id, Material_Update update){
         Material material= materialRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.MATERIAL_NOT_FOUND));
         materialMapper.updateMaterial(material,update);
         material.setUpdateat(LocalDateTime.now());
         return materialMapper.toMaterialResponse(materialRepository.save(material));
     }
-    public void DeleteMaterial(String id) throws AppException {
+    public void DeleteMaterial(String id){
         Material material= materialRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.MATERIAL_NOT_FOUND));
-        materialRepository.save(
-                material.builder()
-                .deleteat(LocalDateTime.now())
-                .isdeleted(true)
-                .build());
+        material.setDeleteat(LocalDateTime.now());
+        material.setIsdeleted(true);
+        materialRepository.save(material);
     }
 }

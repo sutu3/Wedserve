@@ -9,6 +9,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,5 +25,5 @@ public class UserRequest {
     String fullname;
     String gender;
     LocalDate dob;
-    
+    List<String> roles;
 }

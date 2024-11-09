@@ -39,11 +39,11 @@ public class PurchaseService {
                 .map(purchaseMapper::toPurchaseResponse)
                 .collect(Collectors.toList());
     }
-    public PurchaseResponse Getbyid(String id) throws AppException {
+    public PurchaseResponse Getbyid(String id) {
         return purchaseMapper.toPurchaseResponse(purchaseRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.PURCHASE_NOT_FOUND)));
     }
-    public PurchaseResponse PostPurchase(PurchaseRequest request) throws AppException {
+    public PurchaseResponse PostPurchase(PurchaseRequest request) {
         Purchase purchase= purchaseMapper.toPurchase(request);
         log.info(LocalDateTime.now().toString());
         ;
@@ -54,13 +54,13 @@ public class PurchaseService {
                         .createat(LocalDateTime.now())
                         .build()));
     }
-    public List<Purchase_Item> getallList(String id) throws AppException {
+    public List<Purchase_Item> getallList(String id) {
         if(!purchaseRepository.existsById(id)){
             throw new AppException(ErrorCode.PURCHASE_NOT_FOUND);
         }
         return purchaseRepository.findById(id).get().getItems();
     }
-    public PurchaseResponse putPurchase(String id, Purchase_Update update) throws AppException {
+    public PurchaseResponse putPurchase(String id, Purchase_Update update) {
         Purchase purchase= purchaseRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.PURCHASE_NOT_FOUND));
         purchaseMapper.updateMaterial(purchase,update);

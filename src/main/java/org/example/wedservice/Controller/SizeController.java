@@ -32,7 +32,7 @@ public class SizeController {
                 .build();
     }
     @GetMapping("/{id}")
-    public ApiResponse<SizeResponse> getbyId(@PathVariable String id) throws AppException {
+    public ApiResponse<SizeResponse> getbyId(@PathVariable String id) {
         return ApiResponse.<SizeResponse>builder()
                 .Result(sizeservice.getbyId(id))
                 .code(0)
@@ -41,7 +41,7 @@ public class SizeController {
                 .build();
     }
     @PostMapping
-    public ApiResponse<SizeResponse> postSize(@RequestBody @Valid SizeRequest request) throws AppException {
+    public ApiResponse<SizeResponse> postSize(@RequestBody @Valid SizeRequest request){
         log.info(request.getSizename().toString());
         return ApiResponse.<SizeResponse>builder()
                 .Result(sizeservice.PostSize(request))
@@ -52,7 +52,7 @@ public class SizeController {
     }
     @PutMapping("/{id}")
     public ApiResponse<SizeResponse> putSize(@PathVariable String id, @RequestBody Size_Update update)
-            throws AppException {
+            {
         return ApiResponse.<SizeResponse>builder()
                 .Result(sizeservice.putSize(id, update))
                 .code(0)
@@ -61,7 +61,7 @@ public class SizeController {
                 .build();
     }
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteSize(@PathVariable String id) throws AppException {
+    public ApiResponse<Void> deleteSize(@PathVariable String id)  {
         sizeservice.deleteSize(id);
         return ApiResponse.<Void>builder()
                 .message("Delete Completed")

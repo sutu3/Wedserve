@@ -38,7 +38,7 @@ public class AuthenticationService {
     @Value("${jwt.signedJWT}")
     protected String SIGN_KEY;
 
-    public AuthenticationResponse isAuthenticated(AuthenticationRequest request) throws AppException, JOSEException {
+    public AuthenticationResponse isAuthenticated(AuthenticationRequest request) throws JOSEException {
         var user = userRepository.findByUsername(request.getUsername()).orElseThrow(
                 () -> new AppException(ErrorCode.USER_NOT_FOUND));
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
@@ -82,7 +82,16 @@ public class AuthenticationService {
     private String customScope(User user){
         StringJoiner springJoiner=new StringJoiner("");
                 if(!CollectionUtils.isEmpty(user.getRoles())){
-                    user.getRoles().forEach(springJoiner::add);
+                    user.getRoles().forEach(role->{
+                        springJoiner.add("ROLE_"+role.getName());
+                        if(!CollectionUtils.isEmpty(role.getPermissions()))
+                        {
+                            role.getPermissions().forEach(permission->
+                                springJoiner.add(permission.getName())
+                            );
+                        }
+
+                    });
                 }
                 return springJoiner.toString();
     }
