@@ -12,10 +12,7 @@ import org.example.wedservice.Dto.Response.AuthenticationResponse;
 import org.example.wedservice.Dto.Response.IntrospectResponse;
 import org.example.wedservice.Exception.AppException;
 import org.example.wedservice.Service.AuthenticationService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 
@@ -24,6 +21,7 @@ import java.text.ParseException;
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthenticationController {
     AuthenticationService authenticationService;
 

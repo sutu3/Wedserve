@@ -22,6 +22,7 @@ import java.util.List;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
+@CrossOrigin(origins = "http://localhost:5173")
 @Slf4j
 public class UserController {
     UserService userService;
