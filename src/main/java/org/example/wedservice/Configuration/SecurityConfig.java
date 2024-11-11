@@ -1,6 +1,7 @@
 package org.example.wedservice.Configuration;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,11 +32,10 @@ import java.util.Arrays;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-
-    @Value("${jwt.signedJWT}")
-    private String SECRET_KEY;
+    @Autowired
+    private CustumJwtDecoder custumJwtDecoder;
     private static final String[] PUBLIC_ENDPOINTS = {
-            "/user", "/authentication/token", "/authentication/introspect",
+            "/user", "/authentication/token", "/authentication/introspect","/authentication/logout"
     };
     private static final String[] ADMIN_ENDPOINTS = {
             "/user"
@@ -49,7 +49,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated());
         httpSecurity.cors(Customizer.withDefaults());
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer
-                .decoder(jwtDecoder()).jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                .decoder(custumJwtDecoder).jwtAuthenticationConverter(jwtAuthenticationConverter()))
                 .authenticationEntryPoint(new JwtAuthenticationEntrypoint())
         )
                 ;
@@ -79,13 +79,13 @@ public class SecurityConfig {
         return source;
     }
 
-    @Bean
+   /* @Bean
     JwtDecoder jwtDecoder() {
         SecretKeySpec secretKeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "HS512");
         return NimbusJwtDecoder.withSecretKey(secretKeySpec)
                 .macAlgorithm(MacAlgorithm.HS512)
                 .build();
-    }
+    }*/
 
     @Bean
     PasswordEncoder passwordEncoder() {

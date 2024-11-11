@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.example.wedservice.Dto.Request.AuthenticationRequest;
 import org.example.wedservice.Dto.Request.IntrospectRequest;
+import org.example.wedservice.Dto.Request.LogOutRequest;
 import org.example.wedservice.Dto.Response.ApiResponse;
 import org.example.wedservice.Dto.Response.AuthenticationResponse;
 import org.example.wedservice.Dto.Response.IntrospectResponse;
@@ -39,9 +40,20 @@ public class AuthenticationController {
     public ApiResponse<IntrospectResponse> authentication(@RequestBody IntrospectRequest request)
             throws  JOSEException, ParseException {
         var result=authenticationService.instrospect(request);
+
         return ApiResponse.<IntrospectResponse>builder()
                 .Result(result)
                 .message("Completed")
+                .success(true)
+                .code(0)
+                .build();
+    }
+    @PostMapping("/logout")
+    public ApiResponse<Void> logout(@RequestBody LogOutRequest request)
+            throws  JOSEException, ParseException {
+        authenticationService.logout(request);
+        return ApiResponse.<Void>builder()
+                .message("LogOut Completed")
                 .success(true)
                 .code(0)
                 .build();
