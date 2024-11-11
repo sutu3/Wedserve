@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.wedservice.Dto.Request.AuthenticationRequest;
 import org.example.wedservice.Dto.Request.IntrospectRequest;
 import org.example.wedservice.Dto.Request.LogOutRequest;
+import org.example.wedservice.Dto.Request.RefreshRequest;
 import org.example.wedservice.Dto.Response.ApiResponse;
 import org.example.wedservice.Dto.Response.AuthenticationResponse;
 import org.example.wedservice.Dto.Response.IntrospectResponse;
@@ -54,6 +55,17 @@ public class AuthenticationController {
         authenticationService.logout(request);
         return ApiResponse.<Void>builder()
                 .message("LogOut Completed")
+                .success(true)
+                .code(0)
+                .build();
+    }
+    @PostMapping("/refresh")
+    public ApiResponse<AuthenticationResponse> refresh(@RequestBody RefreshRequest request)
+            throws  JOSEException, ParseException {
+        var result=authenticationService.refresh(request);
+        return ApiResponse.<AuthenticationResponse>builder()
+                .message("LogOut Completed")
+                .Result(result)
                 .success(true)
                 .code(0)
                 .build();
