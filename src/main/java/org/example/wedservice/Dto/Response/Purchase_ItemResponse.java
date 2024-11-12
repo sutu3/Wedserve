@@ -20,6 +20,7 @@ public class Purchase_ItemResponse implements Serializable {
     int quantity;
     String idpurchase;
     PurchaseResponseNoListItem purchase;
+    VersionNoListResponse version;
     BigDecimal totalprice;
     BigDecimal purchaseprice;
     LocalDateTime createat;

@@ -15,5 +15,4 @@ import java.util.Set;
 public class Purchase_Update {
     Double totalamoung;
     String status;
-    Set<Purchase_ItemResponse> items;
 }

@@ -40,8 +40,9 @@ public enum ErrorCode {
     PERMISSION_NOT_FOUND(1001,"Permission Not Found", HttpStatus.NOT_FOUND),
     ROLE_IS_EXITED(1001,"Role Is Exited", HttpStatus.BAD_REQUEST),
     ROLE_NOT_FOUND(1001,"Role Not Found", HttpStatus.NOT_FOUND),
+    VERSION_IS_EXITED(1001,"Version Is Exited", HttpStatus.BAD_REQUEST),
+    VERSION_NOT_FOUND(1001,"Version Not Found", HttpStatus.NOT_FOUND),
     UNAUTHORIZED(9998,"You don't as permission" ,HttpStatus.FORBIDDEN );
-
     ErrorCode(int Code,String Message, HttpStatusCode sponse){
         this.code = Code;
         this.message = Message;

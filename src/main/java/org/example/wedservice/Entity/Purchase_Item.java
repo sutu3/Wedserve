@@ -1,13 +1,10 @@
 package org.example.wedservice.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,6 +21,9 @@ public class Purchase_Item {
     @ManyToOne
     @JoinColumn(name = "idpurchase",nullable = false)
     Purchase purchase;
+    @ManyToOne
+    @JoinColumn(name = "idversion",nullable = false)
+    Version version;
     @Column(precision = 10, scale = 2)
     BigDecimal totalprice;
     @Column(precision = 10, scale = 2)

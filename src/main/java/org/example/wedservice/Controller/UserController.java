@@ -55,7 +55,7 @@ public class UserController {
                 .build();
     }
     @PostMapping
-    public ApiResponse<UserResponse> postSize(@RequestBody @Valid UserRequest request) {
+    public ApiResponse<UserResponse> postUser(@RequestBody @Valid UserRequest request) {
         return ApiResponse.<UserResponse>builder()
                 .Result(userService.PostUser(request))
                 .code(0)
@@ -64,7 +64,7 @@ public class UserController {
                 .build();
     }
     @PutMapping("/{id}")
-    public ApiResponse<UserResponse> putSize(@PathVariable String id, @RequestBody User_Update update)
+    public ApiResponse<UserResponse> putUser(@PathVariable String id, @RequestBody User_Update update)
             {
         return ApiResponse.<UserResponse>builder()
                 .Result(userService.putUser(id, update))
@@ -74,7 +74,7 @@ public class UserController {
                 .build();
     }
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteSize(@PathVariable String id){
+    public ApiResponse<Void> deleteUser(@PathVariable String id){
         userService.deleteUser(id);
         return ApiResponse.<Void>builder()
                 .message("Delete Completed")

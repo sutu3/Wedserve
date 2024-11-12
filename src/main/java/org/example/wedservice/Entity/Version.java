@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -13,21 +14,23 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
+
 public class Version {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
     String idversion;
-    int quantity_in_stock ;
+    int quantity_in_stock;
     @Column(precision = 10, scale = 2)
-    BigDecimal purchaseprice;
+    BigDecimal originalprice;
     @Column(precision = 10, scale = 2)
-    BigDecimal saleprice;
+    BigDecimal selling_price;
     @ManyToOne
     @JoinColumn(name = "idproduct",nullable = false)
     Product product;
+    @OneToMany(mappedBy="version")
+    List<Purchase_Item> purchaseItem;
     LocalDateTime createat;
     LocalDateTime updateat;
     LocalDateTime deleteat;
-    boolean isdeleted;
-
+    boolean isdeleted=false;
 }
