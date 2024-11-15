@@ -23,6 +23,7 @@ public class Product {
     String name;
     @OneToMany(mappedBy="product")
     List<Version> version;
+
     @ManyToOne
     @JoinColumn(name = "idmaterial",nullable = false)
     Material materials;

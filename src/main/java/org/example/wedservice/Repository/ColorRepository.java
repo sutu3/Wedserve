@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ColorRepository extends JpaRepository<Color,String> {
     boolean existsByColorname(String colorname);
+    Color findByColorname(String colorname);
     boolean existsByColorhex(String colorhex);
 }
