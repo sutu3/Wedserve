@@ -79,12 +79,12 @@ public class Purchase_ItemService {
                 purchaseRepository.save(purchase.builder()
                         .idpurchase(request.getIdpurchase())
                         .items(combinedItems)
-
                         .status(StatusPurchase.Created)
                         .createat(purchase.getCreateat())
                         .updateat(LocalDateTime.now())
                         .build()));
-        Purchase_ItemResponse itemresponse = purchaseItemMapper.toPurchase_ItemResponse(purchase_item);
+        Purchase_ItemResponse itemresponse = purchaseItemMapper
+                .toPurchase_ItemResponse(purchase_item);
         return itemresponse;
     }
 

@@ -49,7 +49,6 @@ public class VersionService {
         version.setQuantity_in_stock(0);
         version.setCreateat(LocalDateTime.now());
         version.setProduct(product);
-
         return mapper.toVersionResponse(versionRepository.save(version));
     }
 //    public SizeResponse putSize(String id, Size_Update update){

@@ -22,7 +22,7 @@ public class VarientResponse {
     ColorResponse color;
     SizeResponse size;
     CategoryResponse category;
-    VersionResponse version;
+    List<VersionNoListResponse> versions;
     LocalDateTime updateat;
     LocalDateTime deleteat;
     boolean isdeleted;

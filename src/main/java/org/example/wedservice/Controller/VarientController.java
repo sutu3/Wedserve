@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.example.wedservice.Dto.Request.VarientRequest;
 import org.example.wedservice.Dto.Request.VersionRequest;
 import org.example.wedservice.Dto.Response.ApiResponse;
 import org.example.wedservice.Dto.Response.VarientResponse;
@@ -30,14 +31,14 @@ public class VarientController {
                 .message("Completed")
                 .build();
     }
-   /* @PostMapping
-    public ApiResponse<VarientResponse> postVersion(@RequestBody VersionRequest request){
+    @PostMapping
+    public ApiResponse<VarientResponse> postVersion(@RequestBody VarientRequest request){
         return ApiResponse.<VarientResponse>builder()
-                .Result(varientService.PostVersion(request))
+                .Result(varientService.PostVarient(request))
                 .code(0)
                 .success(true)
                 .message("Completed")
                 .build();
-    }*/
+    }
 
 }

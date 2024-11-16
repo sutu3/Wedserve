@@ -24,18 +24,16 @@ public class Varient {
     @JoinColumn(name = "idcolor",nullable = false)
     Color color;
     @ManyToOne
-    @JoinColumn(name = "idimage",nullable = false)
-    Image image;
-    @ManyToOne
     @JoinColumn(name = "idsize",nullable = false)
     Size size;
-
     @ManyToOne
     @JoinColumn(name = "idcategory",nullable = false)
     Category category;
     @ManyToOne
     @JoinColumn(name = "idproduct",nullable = false)
     Product product;
+    @OneToMany(mappedBy="varient")
+    List<Version> versions;
     LocalDateTime createat;
     LocalDateTime updateat;
 }

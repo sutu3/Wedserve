@@ -29,6 +29,9 @@ public class Version {
     Product product;
     @OneToMany(mappedBy="version")
     List<Purchase_Item> purchaseItem;
+    @ManyToOne
+    @JoinColumn(name = "idvarient",nullable = false)
+    Varient varient;
     LocalDateTime createat;
     LocalDateTime updateat;
     LocalDateTime deleteat;

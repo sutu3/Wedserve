@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 public class VarientRequest {
-    String namevarient;
     String colorname;
-    String idimage;
     String sizename;
     String categoryname;
+    BigDecimal originalprice;
+    BigDecimal selling_price;
     String idproduct;
 }
