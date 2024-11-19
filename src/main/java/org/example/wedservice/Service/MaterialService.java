@@ -40,14 +40,14 @@ public class MaterialService {
                 orElseThrow(()->new AppException(ErrorCode.MATERIAL_NOT_FOUND)));
     }
     public MaterialResponse PostMaterial(MaterialRequest request){
-        Material material= materialMapper.toMaterial(request);
-        log.info(materialRepository.existsByName(material.getName())?"dung":"sai");
-        if(materialRepository.existsByName(material.getName())){
+        log.info(materialRepository.existsByName(request.getName())?"dung":"sai");
+        if(materialRepository.existsByName(request.getName())){
             throw new AppException(ErrorCode.MATERIAL_IS_EXITED);
         }
         ;
-        return materialMapper.toMaterialResponse(materialRepository.save(material.builder()
+        return materialMapper.toMaterialResponse(materialRepository.save(Material.builder()
                 .isdeleted(false)
+                        .name(request.getName())
                 .createat(LocalDateTime.now())
                 .build()));
     }

@@ -46,16 +46,13 @@ public class ProductService {
             throw new AppException(ErrorCode.MATERIAL_NOT_FOUND);
         }
         Product product= productMapper.toProduct(request);
-        product.setMaterials(materialRepository.findFistByName(request.getMaterialName()));
+        product.setMaterials(materialRepository.findByName(request.getMaterialName()));
+        product.setCreateat(LocalDateTime.now());
         if(productRepository.existsByName(product.getName())){
             throw new AppException(ErrorCode.PRODUCT_IS_EXITED);
         }
 
-        return productMapper.toProductResponse(productRepository.save(
-                product.builder()
-                .isdeleted(false)
-                .createat(LocalDateTime.now())
-                .build()));
+        return productMapper.toProductResponse(productRepository.save(product));
     }
     public ProductResponse PutProduct(String id, Product_Update update){
         Product product= productRepository.findById(id).

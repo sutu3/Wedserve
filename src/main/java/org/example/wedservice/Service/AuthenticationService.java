@@ -151,7 +151,7 @@ public class AuthenticationService {
                 .build();
     }
     private String customScope(User user){
-        StringJoiner springJoiner=new StringJoiner("");
+        StringJoiner springJoiner=new StringJoiner(" ");
                 if(!CollectionUtils.isEmpty(user.getRoles())){
                     user.getRoles().forEach(role->{
                         springJoiner.add("ROLE_"+role.getName());

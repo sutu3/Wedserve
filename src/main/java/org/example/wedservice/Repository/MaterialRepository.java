@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface MaterialRepository extends JpaRepository<Material,String> {
     boolean existsByName(String name);
     Material findFistByName(String name);
+    Material findByName(String name);
 }
