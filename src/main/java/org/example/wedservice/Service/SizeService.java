@@ -14,6 +14,7 @@ import org.example.wedservice.Mapper.SizeMapper;
 import org.example.wedservice.Repository.SizeRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,12 +40,17 @@ public class SizeService {
         if(sizerepository.existsBySizename(request.getSizename())){
             throw new AppException(ErrorCode.SIZE_IS_EXITED);
         }
+        if(sizerepository.existsBySize(request.getSize())){
+            throw new AppException(ErrorCode.SIZE_IS_EXITED);
+        }
+        size.setCreateat(LocalDateTime.now());
         return mapper.toSizeResponse(sizerepository.save(size));
     }
     public SizeResponse putSize(String id, Size_Update update){
         Size sizeupdate=sizerepository.findById(id)
                 .orElseThrow(()->new AppException(ErrorCode.SIZE_NOT_FOUND));
         mapper.UpdataSizename(sizeupdate,update);
+        sizeupdate.setUpdateat(LocalDateTime.now());
         return mapper.toSizeResponse(sizerepository.save(sizeupdate));
     }
     public void deleteSize(String id) {

@@ -11,5 +11,6 @@ import java.io.Serializable;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SizeRequest implements Serializable {
+    String size;
     String sizename;
 }

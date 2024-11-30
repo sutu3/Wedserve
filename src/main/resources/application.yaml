@@ -16,3 +16,9 @@ jwt:
   signedJWT: "aGUDzL2OOlvQcHJE5fpfzxv0w6MUZtFhF4IRZo+Tc/z5FnKjn8xxJvoot4OVj6LP"
   valid-duration: 3600
   refreshable-duration: 360000
+cors:
+  allowed:
+    origins:
+      - "http://localhost:5173"
+      - "http://26.144.191.229:5173"
+

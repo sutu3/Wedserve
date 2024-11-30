@@ -14,7 +14,5 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String idimage;
-    @Lob
-    @Column(name = "byteimage", columnDefinition = "MEDIUMBLOB")
-    Byte[] image;
+    String UrlImage;
 }

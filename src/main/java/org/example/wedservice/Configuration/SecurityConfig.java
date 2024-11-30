@@ -27,6 +27,7 @@ import org.springframework.web.filter.CorsFilter;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -36,6 +37,10 @@ public class SecurityConfig {
     private CustumJwtDecoder custumJwtDecoder;
     private static final String[] PUBLIC_ENDPOINTS = {
             "/user",
+            "/color",
+            "/size",
+            "/material",
+            "/category",
             "/authentication/token",
             "/authentication/introspect",
             "/authentication/logout",
@@ -44,12 +49,12 @@ public class SecurityConfig {
     private static final String[] ADMIN_ENDPOINTS = {
             "/user"
     };
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.authorizeHttpRequests(request ->
                 request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.GET,PUBLIC_ENDPOINTS).permitAll()
                         .anyRequest().authenticated());
         httpSecurity.cors(Customizer.withDefaults());
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer
@@ -73,7 +78,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Origin mà bạn muốn cho phép
+        configuration.setAllowedOrigins(Arrays.asList(
+
+                "http://26.144.191.229:5173","http://localhost:5173","http://26.225.63.179:5173","http://localhost:8080"
+        ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true); // Cho phép thông tin xác thực (credentials)

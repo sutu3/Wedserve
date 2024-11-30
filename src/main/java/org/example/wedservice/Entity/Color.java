@@ -22,6 +22,7 @@ public class Color {
     String idcolor;
     String colorname;
     String colorhex;
+    LocalDateTime createAt;
     LocalDateTime deleteat;
     boolean isdeleted=false;
 }

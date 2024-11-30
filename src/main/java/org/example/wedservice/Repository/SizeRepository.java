@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface SizeRepository extends JpaRepository<Size,String> {
     boolean existsBySizename(String Sizename);
     Size findBySizename(String sizename);
-
+    boolean existsBySize(String size);
 }

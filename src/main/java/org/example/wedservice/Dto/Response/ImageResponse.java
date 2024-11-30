@@ -4,18 +4,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ColorResponse implements Serializable {
-    String id;
-    String colorname;
-    String colorhex;
-    LocalDateTime createAt;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class ImageResponse {
+    String idimage;
+
 }

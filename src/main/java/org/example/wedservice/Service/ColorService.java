@@ -41,6 +41,7 @@ public class ColorService {
     }
     public ColorResponse PostColor(ColorRequest request){
         Color color=mappercolor.toColor(request);
+        color.setCreateAt(LocalDateTime.now());
         if(repositoryColor.existsByColorhex(request.getColorhex())
                 ||repositoryColor.existsByColorname(request.getColorname())){
             throw new AppException(ErrorCode.COLOR_IS_EXITED);
@@ -51,6 +52,7 @@ public class ColorService {
         Color color=repositoryColor.findById(id)
                .orElseThrow(()->new AppException(ErrorCode.COLOR_NOT_FOUND));
         mappercolor.updateColor(color,update);
+        color.setCreateAt(LocalDateTime.now());
         return mappercolor.toColorResponse(repositoryColor.save(color));
     }
     public void DeleteColor(String id) {

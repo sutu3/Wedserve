@@ -23,7 +23,7 @@ import java.text.ParseException;
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {"http://localhost:5173","http://26.144.191.229:5173","http://26.225.63.179:5173"})
 public class AuthenticationController {
     AuthenticationService authenticationService;
 
@@ -41,7 +41,6 @@ public class AuthenticationController {
     public ApiResponse<IntrospectResponse> authentication(@RequestBody IntrospectRequest request)
             throws  JOSEException, ParseException {
         var result=authenticationService.instrospect(request);
-
         return ApiResponse.<IntrospectResponse>builder()
                 .Result(result)
                 .message("Completed")
