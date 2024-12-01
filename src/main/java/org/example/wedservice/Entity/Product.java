@@ -23,10 +23,14 @@ public class Product {
     String name;
     @OneToMany(mappedBy="product")
     List<Version> version;
-
+    @OneToMany(mappedBy="product")
+    List<Varient> varients;
     @ManyToOne
     @JoinColumn(name = "idmaterial",nullable = false)
     Material materials;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idimage", referencedColumnName = "idimage")
+    Image image;
     LocalDateTime createat;
     LocalDateTime deleteat;
     LocalDateTime updateat;

@@ -14,5 +14,8 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String idimage;
-    String UrlImage;
+    String publicId;
+    String urlImage;
+    @OneToOne(mappedBy = "image")
+    Product product;
 }

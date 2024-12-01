@@ -36,13 +36,14 @@ public enum ErrorCode {
     UNAUTHENTICATED(1005,"Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNCATEGORIZED(9999,"Uncategorized",HttpStatus.INTERNAL_SERVER_ERROR),
     INVALID_KEY(1001,"Invalid key",HttpStatus.BAD_REQUEST),
-    PERMISSION_IS_EXITED(1001,"Permission Is Exited", HttpStatus.BAD_REQUEST),
+    PERMISSION_IS_EXITED(1003,"Permission Is Exited", HttpStatus.BAD_REQUEST),
     PERMISSION_NOT_FOUND(1001,"Permission Not Found", HttpStatus.NOT_FOUND),
-    ROLE_IS_EXITED(1001,"Role Is Exited", HttpStatus.BAD_REQUEST),
+    ROLE_IS_EXITED(1003,"Role Is Exited", HttpStatus.BAD_REQUEST),
     ROLE_NOT_FOUND(1001,"Role Not Found", HttpStatus.NOT_FOUND),
-    VERSION_IS_EXITED(1001,"Version Is Exited", HttpStatus.BAD_REQUEST),
+    VERSION_IS_EXITED(1003,"Version Is Exited", HttpStatus.BAD_REQUEST),
     VERSION_NOT_FOUND(1001,"Version Not Found", HttpStatus.NOT_FOUND),
     VARIENT_NOT_FOUND(1001,"Varient Not Found",HttpStatus.NOT_FOUND),
+    IMAGE_NOT_FOUND(1001,"Image Not Found",HttpStatus.NOT_FOUND),
     UNAUTHORIZED(9998,"You don't as permission" ,HttpStatus.FORBIDDEN );
     ErrorCode(int Code,String Message, HttpStatusCode sponse){
         this.code = Code;

@@ -14,7 +14,7 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface VarientMapper {
-
+    Varient ResponsetoVarient(VarientResponse response);
     Varient toVarient(VarientRequest request);
     VarientResponse toVarientResponse(Varient varient);
     @Mapping(target = "roles",ignore = true)

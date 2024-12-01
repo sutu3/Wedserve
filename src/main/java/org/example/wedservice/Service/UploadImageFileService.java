@@ -2,9 +2,15 @@ package org.example.wedservice.Service;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.example.wedservice.Dto.Response.ApiResponse;
+import org.example.wedservice.Dto.Response.ImageResponse;
+import org.example.wedservice.Entity.Image;
+import org.example.wedservice.Repository.ImageRepository;
 import org.example.wedservice.Repository.UploadImageFile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,9 +24,11 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 @Slf4j
 public class UploadImageFileService implements UploadImageFile {
-    private final Cloudinary cloudinary;
+    Cloudinary cloudinary;
+    ImageRepository imageRepository;
     @Override
     public String uploadImage(MultipartFile image) throws IOException {
         assert image.getOriginalFilename() != null;
@@ -33,11 +41,14 @@ public class UploadImageFileService implements UploadImageFile {
         cloudinary.uploader().upload(fileupload, ObjectUtils.asMap("public_id",publicValue ));
         String filepatch=cloudinary.url().generate(StringUtils.join(publicValue+"."+extension));
         cleanDisk(fileupload);
-        return filepatch;
+        return imageRepository.save(Image.builder()
+                .publicId(publicValue)
+                .urlImage(filepatch)
+                .build()).getIdimage();
     }
     private File conver(MultipartFile file) {
         assert file.getOriginalFilename() != null;
-        File conVertFile=new File(StringUtils.join(generatePublicValue(file.getOriginalFilename()),getFileName(file.getOriginalFilename())[1]));
+        File conVertFile = new File(StringUtils.join(generatePublicValue(file.getOriginalFilename()), ".", getFileName(file.getOriginalFilename())[1]));
         try(InputStream is=file.getInputStream()) {
             Files.copy(is,conVertFile.toPath());
         }catch (IOException e) {

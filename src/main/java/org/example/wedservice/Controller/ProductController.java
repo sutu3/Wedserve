@@ -4,17 +4,18 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.example.wedservice.Dto.Request.MaterialRequest;
 import org.example.wedservice.Dto.Request.ProductRequest;
+import org.example.wedservice.Dto.Request.ProductWithImageRequest;
+import org.example.wedservice.Dto.Request.VarientRequest;
 import org.example.wedservice.Dto.Response.ApiResponse;
-import org.example.wedservice.Dto.Response.MaterialResponse;
 import org.example.wedservice.Dto.Response.ProductResponse;
-import org.example.wedservice.Exception.AppException;
-import org.example.wedservice.Form.Material_Update;
+import org.example.wedservice.Dto.Response.VarientResponse;
 import org.example.wedservice.Form.Product_Update;
 import org.example.wedservice.Service.ProductService;
+import org.example.wedservice.Service.VarientService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -24,6 +25,8 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 public class ProductController {
     ProductService productService;
+    VarientService varientService;
+
     @GetMapping
     public ApiResponse<List<ProductResponse>> getall(){
         return ApiResponse.<List<ProductResponse>>builder()
@@ -43,7 +46,7 @@ public class ProductController {
                 .build();
     }
     @PostMapping()
-    public ApiResponse<ProductResponse> postMaterial(@RequestBody ProductRequest request){
+    public ApiResponse<ProductResponse> postProduct(@RequestBody ProductRequest request){
         return ApiResponse.<ProductResponse>builder()
                 .Result(productService.PostProduct(request))
                 .code(0)
@@ -51,8 +54,33 @@ public class ProductController {
                 .success(true)
                 .build();
     }
+    @PostMapping("/variants")
+    public ApiResponse<ProductResponse> createVariants(@RequestBody List<VarientRequest> variants) {
+        List<String> result = new ArrayList<>();
+
+        for (VarientRequest variant : variants) {
+            VarientResponse varientResponse=varientService.PostVarient(variant);
+            productService.addVarientToProduct(variant.getIdproduct(), varientResponse);
+        }
+        return ApiResponse.<ProductResponse>builder()
+                .Result(productService.Getbyid(variants.get(0).getIdproduct()))
+                .code(0)
+                .success(true)
+                .message("Completed")
+                .build();
+    }
+    @PutMapping
+    public ApiResponse<ProductResponse> putProductWithImage(@RequestBody ProductWithImageRequest request)
+    {
+        return ApiResponse.<ProductResponse>builder()
+                .Result(productService.PutProductWithImage(request))
+                .message("Completed")
+                .code(0)
+                .success(true)
+                .build();
+    }
     @PutMapping("/{id}")
-    public ApiResponse<ProductResponse> putMaterial(@PathVariable String id, @RequestBody Product_Update update)
+    public ApiResponse<ProductResponse> putProduct(@PathVariable String id, @RequestBody Product_Update update)
            {
         return ApiResponse.<ProductResponse>builder()
                 .Result(productService.PutProduct(id,update))
@@ -62,7 +90,7 @@ public class ProductController {
                 .build();
     }
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteCategory(@PathVariable String id) {
+    public ApiResponse<Void> deleteProduct(@PathVariable String id) {
         productService.DeleteProduct(id);
         return ApiResponse.<Void>builder()
                .message("Delete Completed")
