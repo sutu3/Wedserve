@@ -20,6 +20,7 @@ public enum ErrorCode {
     CATEGORY_INVALID(1002,"Category Invalid",HttpStatus.BAD_REQUEST),
     CATEGORY_IS_EXITED(1003,"Category Is Exited",HttpStatus.BAD_REQUEST),
     GENDER_IS_EXITED(1003,"Gendering Is Exited",HttpStatus.BAD_REQUEST),
+    GENDER_INVALID(1002,"Gender Invalid",HttpStatus.BAD_REQUEST),
     DESCRIPTION_NOT_FOUND(1001,"Description Not Found",HttpStatus.NOT_FOUND),
     MATERIAL_NOT_FOUND(1001,"Material Not Found", HttpStatus.NOT_FOUND),
     MATERIAL_INVALID(1002,"Material Invalid",HttpStatus.BAD_REQUEST),
@@ -44,6 +45,8 @@ public enum ErrorCode {
     VERSION_NOT_FOUND(1001,"Version Not Found", HttpStatus.NOT_FOUND),
     VARIENT_NOT_FOUND(1001,"Varient Not Found",HttpStatus.NOT_FOUND),
     IMAGE_NOT_FOUND(1001,"Image Not Found",HttpStatus.NOT_FOUND),
+    VARIANTS_EMPTY(1005,"Varient Is Empty",HttpStatus.NOT_FOUND),
+    DESCRIPTIONS_EMPTY(1005,"Description Is Empty",HttpStatus.NOT_FOUND),
     UNAUTHORIZED(9998,"You don't as permission" ,HttpStatus.FORBIDDEN );
     ErrorCode(int Code,String Message, HttpStatusCode sponse){
         this.code = Code;

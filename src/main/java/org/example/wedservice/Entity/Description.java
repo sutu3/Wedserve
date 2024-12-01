@@ -1,9 +1,6 @@
 package org.example.wedservice.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -22,6 +19,9 @@ public class Description {
     String iddescription;
     String title;
     String description;
+    @ManyToOne
+    @JoinColumn(name = "idproduct",nullable = false)
+    Product product;
     LocalDateTime deleteat;
     LocalDateTime updateat;
     boolean isdeleted=false;

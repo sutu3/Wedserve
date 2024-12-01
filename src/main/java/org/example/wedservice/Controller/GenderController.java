@@ -8,10 +8,7 @@ import org.example.wedservice.Dto.Response.ApiResponse;
 import org.example.wedservice.Dto.Response.GenderResponse;
 import org.example.wedservice.Exception.AppException;
 import org.example.wedservice.Service.GenderService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,7 +28,7 @@ public class GenderController {
                 .build();
     }
     @PostMapping
-    public ApiResponse<GenderResponse> postGender(GenderRequest request) {
+    public ApiResponse<GenderResponse> postGender(@RequestBody GenderRequest request) {
         return ApiResponse.<GenderResponse>builder()
                 .Result(genderService.Postgender(request))
                 .code(0)

@@ -27,9 +27,6 @@ public class Varient {
     @JoinColumn(name = "idsize",nullable = false)
     Size size;
     @ManyToOne
-    @JoinColumn(name = "idcategory",nullable = false)
-    Category category;
-    @ManyToOne
     @JoinColumn(name = "idproduct",nullable = false)
     Product product;
     @OneToMany(mappedBy="varient")

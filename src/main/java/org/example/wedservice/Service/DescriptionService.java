@@ -7,11 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.wedservice.Dto.Request.DescriptionRequest;
 import org.example.wedservice.Dto.Response.DescriptionResponse;
 import org.example.wedservice.Entity.Description;
+import org.example.wedservice.Entity.Product;
 import org.example.wedservice.Exception.AppException;
 import org.example.wedservice.Exception.ErrorCode;
 import org.example.wedservice.Form.Description_Update;
 import org.example.wedservice.Mapper.DescriptionMapper;
 import org.example.wedservice.Repository.DescriptionRepository;
+import org.example.wedservice.Repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 public class DescriptionService {
     DescriptionRepository descriptionRepository;
     DescriptionMapper descriptionMapper;
+    private final ProductRepository productRepository;
 
     public List<DescriptionResponse> getallDes(){
         return descriptionRepository.findAll()
@@ -38,7 +41,10 @@ public class DescriptionService {
                         new AppException(ErrorCode.DESCRIPTION_NOT_FOUND)));
     }
     public DescriptionResponse PostDescription(DescriptionRequest request){
+        Product product=productRepository.findById(request.getIdproduct())
+                .orElseThrow(()->new AppException(ErrorCode.PRODUCT_NOT_FOUND));
         Description description=descriptionMapper.toDescription(request);
+        description.setProduct(product);
         return descriptionMapper.
                 toDescriptionResponse(descriptionRepository.save(description));
     }

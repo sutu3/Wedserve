@@ -21,7 +21,6 @@ public class VarientResponse {
     String namevarient;
     ColorResponse color;
     SizeResponse size;
-    CategoryResponse category;
     List<VersionNoListResponse> versions;
     LocalDateTime updateat;
     LocalDateTime deleteat;

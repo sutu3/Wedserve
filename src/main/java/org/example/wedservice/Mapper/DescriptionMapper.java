@@ -10,6 +10,8 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface DescriptionMapper {
+    @Mapping(source = "id",target = "iddescription")
+    Description toResponsefromDescription(DescriptionResponse descriptionResponse);
     @Mapping(source = "iddescription",target = "id")
     DescriptionResponse toDescriptionResponse(Description description);
     Description toDescription(DescriptionRequest request);

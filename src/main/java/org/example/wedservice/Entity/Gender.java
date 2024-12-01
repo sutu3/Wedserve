@@ -1,11 +1,10 @@
 package org.example.wedservice.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.Set;
 
 @Entity
 @Data
@@ -18,4 +17,6 @@ public class Gender {
     @GeneratedValue(strategy = GenerationType.UUID)
     String idgender;
     String gender;
+    @OneToMany(mappedBy="gender")
+    Set<Product> products;
 }

@@ -56,32 +56,31 @@ public class VarientService {
             throw new AppException(ErrorCode.COLOR_NOT_FOUND);
         }
         Color color = colorRepository.findByColorname(request.getColorname());
-        if(!categoryRepository.existsByName(request.getCategoryname()))
-        {
-            throw new AppException(ErrorCode.CATEGORY_NOT_FOUND);
-        }
-        Category category = categoryRepository.findByName(request.getCategoryname());
-       Varient varient= varientRepository.save(Varient.builder()
-                .namevarient(category.getName() + " " + color.getColorname() + " " + size.getSizename())
-                .color(color)
-                .size(size)
-                .product(product)
-                .createat(LocalDateTime.now())
-                .category(category)
-                .build());
-       Version version= Version.builder()
-               .quantity_in_stock(0)
-               .varient(varient)
-               .originalprice(request.getOriginalprice())
-               .selling_price(request.getSelling_price())
-               .createat(LocalDateTime.now())
-               .product(product)
-               .isdeleted(false)
-               .build();
-        versionRepository.save(version);
+        Category category=categoryRepository.findById(product.getCategory().getIdcategory())
+                .orElseThrow(()->new AppException(ErrorCode.CATEGORY_NOT_FOUND));
+        Varient varient = varientRepository.save(
+                Varient.builder()
+                        .namevarient(category.getName() + " " + color.getColorname() + " " + size.getSizename())
+                        .color(color)
+                        .size(size)
+                        .product(product)
+                        .createat(LocalDateTime.now())
+                        .build()
+        );
 
-        return mapper.toVarientResponse(varientRepository.findById(
-                varient.getId_variant()).orElseThrow(()->new AppException(ErrorCode.VARIENT_NOT_FOUND)));
+        versionRepository.save(
+                Version.builder()
+                        .quantity_in_stock(0)
+                        .varient(varient)
+                        .originalprice(request.getOriginalprice())
+                        .selling_price(request.getSelling_price())
+                        .createat(LocalDateTime.now())
+                        .product(product)
+                        .isdeleted(false)
+                        .build()
+        );
+
+        return mapper.toVarientResponse(varient);
     }
 /*    public SizeResponse putSize(String id, Size_Update update){
         Size sizeupdate= versionRepository.findById(id)

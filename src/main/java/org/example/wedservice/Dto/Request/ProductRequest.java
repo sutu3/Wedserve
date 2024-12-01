@@ -13,4 +13,6 @@ import java.io.Serializable;
 public class ProductRequest implements Serializable {
     String name;
     String materialName;
+    String categoryname;
+    String gender;
 }

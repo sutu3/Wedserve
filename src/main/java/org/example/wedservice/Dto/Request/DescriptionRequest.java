@@ -12,4 +12,5 @@ import lombok.experimental.FieldDefaults;
 public class DescriptionRequest {
     String title;
     String description;
+    String idproduct;
 }

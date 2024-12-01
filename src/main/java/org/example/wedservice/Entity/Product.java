@@ -31,6 +31,21 @@ public class Product {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idimage", referencedColumnName = "idimage")
     Image image;
+    @ManyToOne
+    @JoinColumn(name = "idgender",nullable = false)
+    Gender gender;
+    @ManyToOne
+    @JoinColumn(name = "idcategory",nullable = false)
+    Category category;
+    @OneToMany(mappedBy="product")
+    List<Description> descriptions;
+
+    /*@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idcategory", referencedColumnName = "idcategory")
+    Category category;*/
+    /*@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idgender", referencedColumnName = "idgender")
+    Gender gender;*/
     LocalDateTime createat;
     LocalDateTime deleteat;
     LocalDateTime updateat;

@@ -14,6 +14,7 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
+    @Mapping(target = "gender",ignore = true)
     Product toProduct(ProductRequest request);
     @Mapping(source = "idproduct",target = "id")
     ProductResponse toProductResponse(Product product);

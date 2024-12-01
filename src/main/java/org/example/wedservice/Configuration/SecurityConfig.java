@@ -39,6 +39,7 @@ public class SecurityConfig {
             "/user",
             "/color",
             "/size",
+            "/product",
             "/material",
             "/category",
             "/authentication/token",

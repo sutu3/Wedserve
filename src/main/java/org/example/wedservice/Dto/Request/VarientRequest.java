@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 public class VarientRequest {
     String colorname;
     String sizename;
-    String categoryname;
     BigDecimal originalprice;
     BigDecimal selling_price;
     String idproduct;
