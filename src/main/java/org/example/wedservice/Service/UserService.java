@@ -74,7 +74,6 @@ public class UserService {
                         .username(request.getUsername())
                         .email(request.getEmail())
                         .dob(request.getDob())
-
                         .fullname(request.getFullname())
                         .phonenumber(request.getPhonenumber())
                         .gender(request.getGender())

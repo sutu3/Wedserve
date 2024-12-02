@@ -87,10 +87,12 @@ public class VarientService {
                 .orElseThrow(()->new AppException(ErrorCode.SIZE_NOT_FOUND));
         mapper.UpdataSizename(sizeupdate,update);
         return mapper.toSizeResponse(versionRepository.save(sizeupdate));
-    }
-    public void deleteSize(String id) {
-       versionRepository.findById(id)
-                .orElseThrow(()->new AppException(ErrorCode.SIZE_NOT_FOUND));
-        versionRepository.deleteById(id);
     }*/
+    public void deleteVarient(String id) {
+       Varient varient=varientRepository.findById(id)
+                .orElseThrow(()->new AppException(ErrorCode.VARIENT_NOT_FOUND));
+       varient.setDeleteat(LocalDateTime.now());
+       varient.setIsdeleted(true);
+        varientRepository.save(varient);
+    }
 }

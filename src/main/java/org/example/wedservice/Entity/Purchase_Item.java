@@ -18,6 +18,7 @@ public class Purchase_Item {
     @GeneratedValue(strategy= GenerationType.UUID)
     String idpurchaseitem;
     int quantity;
+    
     @ManyToOne
     @JoinColumn(name = "idpurchase",nullable = false)
     Purchase purchase;

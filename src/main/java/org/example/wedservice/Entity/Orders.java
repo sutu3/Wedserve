@@ -4,10 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -15,24 +14,22 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Builder
-public class User {
+public class Orders {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    String iduser;
-    String username;
-    String password;
-    String email;
-    @ManyToMany
-    Set<Role> roles;
-    String phonenumber;
-    String fullname;
-    String gender;
-    @OneToMany(mappedBy="user")
-    List<Orders> orders;
-    LocalDate dob;
+    String idorder;
+    @ManyToOne
+    @JoinColumn(name = "iduser",nullable = false)
+    User user;
+    String status;
+    LocalDateTime orderdate;
+    @OneToMany(mappedBy="order")
+    List<Order_Item> orderitems;
+    @Column(precision = 10, scale = 2)
+    BigDecimal totalamount;
     LocalDateTime createdat;
     LocalDateTime updatedat;
     LocalDateTime deletedat;
-    boolean isDeleted;
+    boolean isDeleted=false;
 
 }

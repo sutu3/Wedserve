@@ -33,4 +33,6 @@ public class Varient {
     List<Version> versions;
     LocalDateTime createat;
     LocalDateTime updateat;
+    LocalDateTime deleteat;
+    boolean isdeleted=false;
 }

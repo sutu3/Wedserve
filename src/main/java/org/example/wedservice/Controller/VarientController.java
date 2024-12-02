@@ -40,5 +40,13 @@ public class VarientController {
                 .message("Completed")
                 .build();
     }
-
+    @DeleteMapping("/{id}")
+    public ApiResponse<Void> deleteCategory(@PathVariable String id)  {
+        varientService.deleteVarient(id);
+        return ApiResponse.<Void>builder()
+                .message("Delete Completed")
+                .code(0)
+                .success(true)
+                .build();
+    }
 }
