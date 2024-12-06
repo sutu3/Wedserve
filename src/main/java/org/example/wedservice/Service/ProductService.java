@@ -75,6 +75,7 @@ public class ProductService {
         product.setCreateat(LocalDateTime.now());
         product.setCategory(category);
         product.setGender(gender);
+        product.setDescriptions(null);
         if(productRepository.existsByName(product.getName())){
             throw new AppException(ErrorCode.PRODUCT_IS_EXITED);
         }

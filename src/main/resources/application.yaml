@@ -12,6 +12,7 @@ spring:
     show-sql: true
 server:
   port: 8080
+  address: 0.0.0.0
 jwt:
   signedJWT: "aGUDzL2OOlvQcHJE5fpfzxv0w6MUZtFhF4IRZo+Tc/z5FnKjn8xxJvoot4OVj6LP"
   valid-duration: 3600

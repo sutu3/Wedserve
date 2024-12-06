@@ -38,7 +38,7 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "idcategory",nullable = false)
     Category category;
-    @OneToMany(mappedBy="product")
+    @OneToMany(mappedBy="product", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Description> descriptions;
 
     /*@OneToOne(cascade = CascadeType.ALL)

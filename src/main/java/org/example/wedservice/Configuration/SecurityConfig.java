@@ -36,19 +36,20 @@ public class SecurityConfig {
     @Autowired
     private CustumJwtDecoder custumJwtDecoder;
     private static final String[] PUBLIC_ENDPOINTS = {
-            "/user",
-            "/color",
-            "/size",
-            "/product",
-            "/material",
-            "/category",
+            "/users",
+            "/colors",
+            "/sizes",
+            "/products",
+            "/materials",
+            "/categorys",
             "/authentication/token",
             "/authentication/introspect",
             "/authentication/logout",
             "/authentication/refresh",
+            "/color"
     };
     private static final String[] ADMIN_ENDPOINTS = {
-            "/user"
+            "/users"
     };
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -80,8 +81,13 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList(
-
-                "http://26.144.191.229:5173","http://localhost:5175","http://localhost:5173","http://localhost:5174","http://26.225.63.179:5173","http://localhost:8080"
+                "http://localhost:8080",
+                "http://192.168.x.x:8080",
+                "http://26.144.191.229:5173",
+                "http://localhost:5173",
+                "http://26.144.191.229:5173",
+                "http://26.232.136.42:5173",
+                "http://localhost:5174"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
