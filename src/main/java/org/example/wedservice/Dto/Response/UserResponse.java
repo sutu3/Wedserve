@@ -2,9 +2,11 @@ package org.example.wedservice.Dto.Response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.example.wedservice.Entity.Orders;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -22,6 +24,7 @@ public class UserResponse {
     String gender;
     LocalDate dob;
     Set<RoleResponse> roles;
+    List<OrderResponse> orders;
     LocalDateTime createdat;
     LocalDateTime updatedat;
     LocalDateTime deletedat;

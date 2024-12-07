@@ -23,7 +23,7 @@ import java.text.ParseException;
 @Slf4j
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
-@CrossOrigin(origins = {"http://localhost:5173","http://26.144.191.229:5173","http://26.225.63.179:5173"})
+@CrossOrigin(origins = {"http://localhost:5173","http://localhost:5174","http://26.144.191.229:5173","http://26.225.63.179:5173"})
 public class AuthenticationController {
     AuthenticationService authenticationService;
 
