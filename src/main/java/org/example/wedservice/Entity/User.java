@@ -22,6 +22,10 @@ public class User {
     String username;
     String password;
     String email;
+    String avatar;
+    String address;
+    String district;
+    String city;
     @ManyToMany
     Set<Role> roles;
     String phonenumber;

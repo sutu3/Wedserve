@@ -1,4 +1,4 @@
-package org.example.wedservice.Form;
+package org.example.wedservice.Dto.Request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -13,8 +13,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrderItem_Update {
-    String colorname;
-    String sizename;
-    BigDecimal price_at_sale;
+public class OrderItemQuanlityResquest {
+    Integer quantity;
 }

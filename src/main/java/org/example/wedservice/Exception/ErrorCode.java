@@ -51,6 +51,7 @@ public enum ErrorCode {
     ORDER_NOT_FOUND(1001,"Order Not Found", HttpStatus.NOT_FOUND),
     ORDER_ITEM_IS_EXITED(1003,"Order item Is Exited", HttpStatus.BAD_REQUEST),
     ORDER_ITEM_NOT_FOUND(1001,"Order item Not Found", HttpStatus.NOT_FOUND),
+    INVENTORY_NOT_FOUND(1001,"Inventory Not Found", HttpStatus.NOT_FOUND),
     UNAUTHORIZED(9998,"You don't as permission" ,HttpStatus.FORBIDDEN );
     ErrorCode(int Code,String Message, HttpStatusCode sponse){
         this.code = Code;

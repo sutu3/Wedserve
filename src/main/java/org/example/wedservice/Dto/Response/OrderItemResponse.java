@@ -3,6 +3,7 @@ package org.example.wedservice.Dto.Response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.example.wedservice.Entity.Inventory;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

@@ -41,12 +41,16 @@ public class SecurityConfig {
             "/sizes",
             "/products",
             "/materials",
+            "/orderitems/change",
             "/categorys",
+            "/orderitems",
             "/authentication/token",
             "/authentication/introspect",
             "/authentication/logout",
             "/authentication/refresh",
-            "/color"
+            "/color",
+            "/inventory",
+            "/inventory/sale"
     };
     private static final String[] ADMIN_ENDPOINTS = {
             "/users"
@@ -55,8 +59,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.authorizeHttpRequests(request ->
-                request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+                request.requestMatchers(HttpMethod.POST,PUBLIC_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.GET,PUBLIC_ENDPOINTS).permitAll()
+                        .requestMatchers(HttpMethod.PUT,PUBLIC_ENDPOINTS).permitAll()
                         .anyRequest().authenticated());
         httpSecurity.cors(Customizer.withDefaults());
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer

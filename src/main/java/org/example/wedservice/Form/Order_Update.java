@@ -13,8 +13,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class OrderItem_Update {
-    String colorname;
-    String sizename;
-    BigDecimal price_at_sale;
+public class Order_Update {
+    BigDecimal totalamoung;
 }

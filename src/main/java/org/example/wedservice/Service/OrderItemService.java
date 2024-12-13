@@ -3,6 +3,8 @@ package org.example.wedservice.Service;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
+import org.example.wedservice.Dto.Request.OrderItemQuanlityResquest;
 import org.example.wedservice.Dto.Request.OrderItemResquest;
 import org.example.wedservice.Dto.Response.OrderItemResponse;
 import org.example.wedservice.Entity.Order_Item;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 @Service
 @FieldDefaults(level = AccessLevel.PRIVATE,makeFinal = true)
 @RequiredArgsConstructor
+@Slf4j
 public class OrderItemService {
     OrderItemRepository orderItemRepository;
     OrderItemMapper orderItemMapper;
@@ -37,6 +40,14 @@ public class OrderItemService {
                 orElseThrow(()->new AppException(ErrorCode.ORDER_ITEM_NOT_FOUND)));
     }
 
+    public OrderItemResponse changeQuanlityItem(String id,OrderItemQuanlityResquest resquest){
+        log.info("heheheheh");
+        Order_Item item= orderItemRepository.findById(id).
+                orElseThrow(()->new AppException(ErrorCode.ORDER_ITEM_NOT_FOUND));
+        item.setQuantity(resquest.getQuantity());
+        item.setUpdatedat(LocalDateTime.now());
+        return orderItemMapper.tOrderItemResponse(orderItemRepository.save(item));
+    }
      public OrderItemResponse postOrderItem(OrderItemResquest request){
         Order_Item item=orderItemMapper.toOrderItem(request);
         item.setOrder(orderRepository.getById(request.getOrderid()));
@@ -50,9 +61,9 @@ public class OrderItemService {
         return orderItemMapper.tOrderItemResponse(orderItemRepository.save(item)) ;
     }
     public String DeleteOrderItem(String id) {
-        orderItemRepository.findById(id).
+       orderItemRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.ORDER_ITEM_NOT_FOUND));
-    orderRepository.deleteById(id);
+    orderItemRepository.deleteById(id);
     return id;
     }
 }

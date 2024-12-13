@@ -10,7 +10,9 @@ import org.example.wedservice.Dto.Response.ApiResponse;
 import org.example.wedservice.Dto.Response.CategoryResponse;
 import org.example.wedservice.Dto.Response.OrderResponse;
 import org.example.wedservice.Form.Category_Update;
+import org.example.wedservice.Form.Order_Update;
 import org.example.wedservice.Service.OrderService;
+import org.hibernate.query.Order;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,17 +51,17 @@ public class OrderController {
                 .success(true)
                 .build();
     }
-    /*@PutMapping("/{id}")
-    public ApiResponse<CategoryResponse> PutCategory(@PathVariable String id, @RequestBody Category_Update update)
+    @PutMapping("/{id}")
+    public ApiResponse<OrderResponse> PutOrder(@PathVariable String id, @RequestBody Order_Update update)
             {
-        return ApiResponse.<CategoryResponse>builder()
-                .Result(orderService.putCategory(id,update))
+        return ApiResponse.<OrderResponse>builder()
+                .Result(orderService.changeStatus(id,update))
                 .message("Completed")
                 .code(0)
                 .success(true)
                 .build();
     }
-    @DeleteMapping("/{id}")
+   /* @DeleteMapping("/{id}")
     public ApiResponse<Void> deleteCategory(@PathVariable String id) {
         orderService.DeleteCategory(id);
         return ApiResponse.<Void>builder()

@@ -3,10 +3,10 @@ package org.example.wedservice.Entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.cglib.core.Local;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Data
@@ -14,24 +14,15 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Builder
-public class Orders {
+public class Shipping {
     @Id
     @GeneratedValue(strategy= GenerationType.UUID)
-    String idorder;
-    @ManyToOne
-    @JoinColumn(name = "iduser",nullable = false)
-    User user;
+    String idshipping;
     String status;
-    LocalDateTime orderdate;
-    @OneToMany(mappedBy="order")
-    List<Order_Item> orderitems;
-    @OneToMany(mappedBy="order")
-    List<Shipping> shippings;
-    @Column(precision = 10, scale = 2)
-    BigDecimal totalamount;
+    @ManyToOne
+    @JoinColumn(name = "idorder",nullable = false)
+    Orders order;
+    LocalDateTime shippingdate;
     LocalDateTime createdat;
     LocalDateTime updatedat;
-    LocalDateTime deletedat;
-    boolean isDeleted=false;
-
 }

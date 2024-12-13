@@ -5,10 +5,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.example.wedservice.Dto.Request.OrderResquest;
 import org.example.wedservice.Dto.Response.OrderResponse;
+import org.example.wedservice.Entity.Order_Item;
 import org.example.wedservice.Entity.Orders;
 import org.example.wedservice.Enum.OrderStatus;
 import org.example.wedservice.Exception.AppException;
 import org.example.wedservice.Exception.ErrorCode;
+import org.example.wedservice.Form.Order_Update;
 import org.example.wedservice.Mapper.OrderMapper;
 import org.example.wedservice.Repository.OrderRepository;
 import org.example.wedservice.Repository.UserRepository;
@@ -35,10 +37,18 @@ public class OrderService {
         return orderMapper.tOrderResponse(orderRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.ORDER_NOT_FOUND)));
     }
-
-     public OrderResponse postOrder(OrderResquest request){
+    public OrderResponse changeStatus(String id, Order_Update resquest){
+        Orders order=orderRepository.findById(id)
+                .orElseThrow(()->new AppException(ErrorCode.ORDER_NOT_FOUND));
+        order.setStatus(OrderStatus.CONFIRMED.name());
+        order.setTotalamount(resquest.getTotalamoung());
+        order.setUpdatedat(LocalDateTime.now());
+        return orderMapper.tOrderResponse(orderRepository.save(order));
+    }
+    public OrderResponse postOrder(OrderResquest request){
         return orderMapper.tOrderResponse(orderRepository.save(Orders.builder()
                 .createdat(LocalDateTime.now())
+                        .totalamount(request.getTotalamount())
                 .user(userRepository.findById(request.getUserid())
                         .orElseThrow(()->new AppException(ErrorCode.USER_NOT_FOUND)))
                 .status(OrderStatus.PENDING.toString())

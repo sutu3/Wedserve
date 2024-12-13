@@ -24,6 +24,9 @@ public class Order_Item {
     @JoinColumn(name = "idorder",nullable = false)
     Orders order;
     Integer quantity;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idinventory", referencedColumnName = "idinventory")
+    Inventory inventory;
     @Column(precision = 10, scale = 2)
     BigDecimal price_at_sale;
     LocalDateTime createdat;

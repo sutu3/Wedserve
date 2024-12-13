@@ -22,6 +22,10 @@ public class UserResponse {
     String phonenumber;
     String fullname;
     String gender;
+    String avatar;
+    String address;
+    String district;
+    String city;
     LocalDate dob;
     Set<RoleResponse> roles;
     List<OrderResponse> orders;
