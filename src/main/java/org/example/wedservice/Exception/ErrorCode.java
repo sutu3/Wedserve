@@ -47,6 +47,8 @@ public enum ErrorCode {
     IMAGE_NOT_FOUND(1001,"Image Not Found",HttpStatus.NOT_FOUND),
     VARIANTS_EMPTY(1005,"Varient Is Empty",HttpStatus.NOT_FOUND),
     DESCRIPTIONS_EMPTY(1005,"Description Is Empty",HttpStatus.NOT_FOUND),
+    PURCHASE_ITEMS_EMPTY(1005,"Purchase items Is Empty",HttpStatus.NOT_FOUND),
+    INVENTORYS_EMPTY(1005,"Inventorys Is Empty",HttpStatus.NOT_FOUND),
     ORDER_IS_EXITED(1003,"Order Is Exited", HttpStatus.BAD_REQUEST),
     ORDER_NOT_FOUND(1001,"Order Not Found", HttpStatus.NOT_FOUND),
     ORDER_ITEM_IS_EXITED(1003,"Order item Is Exited", HttpStatus.BAD_REQUEST),

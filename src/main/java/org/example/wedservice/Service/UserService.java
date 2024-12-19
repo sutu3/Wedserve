@@ -4,20 +4,18 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.example.wedservice.Dto.Request.SizeRequest;
+import org.example.wedservice.Dto.Request.UserAvataRequest;
 import org.example.wedservice.Dto.Request.UserRequest;
-import org.example.wedservice.Dto.Response.SizeResponse;
 import org.example.wedservice.Dto.Response.UserResponse;
-import org.example.wedservice.Entity.Size;
+import org.example.wedservice.Entity.Role;
 import org.example.wedservice.Entity.User;
-import org.example.wedservice.Enum.Role;
+import org.example.wedservice.Enum.RoleEnum;
 import org.example.wedservice.Exception.AppException;
 import org.example.wedservice.Exception.ErrorCode;
 import org.example.wedservice.Form.User_Update;
 import org.example.wedservice.Mapper.UserMapper;
 import org.example.wedservice.Repository.RoleRepository;
 import org.example.wedservice.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -41,7 +39,9 @@ public class UserService {
 
     PasswordEncoder passwordEncoder;
 
+/*
     @PreAuthorize("hasRole('ADMIN')")
+*/
     public List<UserResponse> getall() {
         return userRepository.findAll().stream()
                 .map(mapper::toUserResponse).collect(Collectors.toList());
@@ -65,37 +65,37 @@ public class UserService {
             throw new AppException(ErrorCode.USERNAME_IS_EXITED);
         }
         User user = mapper.toUser(request);
-        HashSet<String> role=new HashSet<String>();
-/*
-        role.add(Role.USER.name());
-*/
+        Role role=roleRepository.findByName(RoleEnum.USER.name());
+        HashSet<Role> rolelist=new HashSet<Role>();
+        rolelist.add(role);
         return mapper.toUserResponse(userRepository
                 .save(user.builder()
                         .username(request.getUsername())
                         .email(request.getEmail())
-                        .dob(request.getDob())
-                        .fullname(request.getFullname())
                         .phonenumber(request.getPhonenumber())
-                        .gender(request.getGender())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .createdat(LocalDateTime.now())
                 .isDeleted(false)
-                /*.roles(role)*/
+                .roles(rolelist)
                 .build()));
     }
 
     public UserResponse putUser(String id, User_Update update) {
         User userupdate = userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
-        var role=roleRepository.findAllById(update.getRoles());
         mapper.updateUser(userupdate, update);
         userupdate.setUpdatedat(LocalDateTime.now());
-        userupdate.setPassword(passwordEncoder.encode(update.getPassword()));
-        userupdate.setRoles(new HashSet<>(role));
         return mapper.toUserResponse(userRepository
                 .save(userupdate));
     }
-
+    public UserResponse putUser(String id, UserAvataRequest request) {
+        User userupdate = userRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        userupdate.setAvatar(request.getAvata());
+        userupdate.setUpdatedat(LocalDateTime.now());
+        return mapper.toUserResponse(userRepository
+                .save(userupdate));
+    }
     public void deleteUser(String id){
         User user=userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));

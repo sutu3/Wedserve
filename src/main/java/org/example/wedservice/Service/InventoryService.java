@@ -11,8 +11,10 @@ import org.example.wedservice.Entity.Order_Item;
 import org.example.wedservice.Entity.Varient;
 import org.example.wedservice.Entity.Version;
 import org.example.wedservice.Enum.Even_Type;
+import org.example.wedservice.Enum.OrderStatus;
 import org.example.wedservice.Exception.AppException;
 import org.example.wedservice.Exception.ErrorCode;
+import org.example.wedservice.Form.Inventory_Update;
 import org.example.wedservice.Mapper.InventoryMapper;
 import org.example.wedservice.Repository.*;
 import org.springframework.stereotype.Service;
@@ -50,11 +52,24 @@ public class InventoryService {
         inventory.setCreateat(LocalDateTime.now());
         inventory.setOrderitem(item);
         inventory.setVersion(version);
+        inventory.setEvent(Even_Type.SALE.name());
         Inventory inventory1=inventoryRepository.save(inventory);
         InventoryResponse inventoryResponse= inventoryMapper.toInventoryResponse(inventory1);
         item.setInventory(inventory1);
         orderItemRepository.save(item);
         return inventoryResponse;
+    }
+    public InventoryResponse PostImportInventory(Inventory_Update request){
+        Inventory inventory=new Inventory();
+        Version version= versionRepository.findById(request.getVersionid())
+                .orElseThrow(()->new AppException(ErrorCode.INVENTORY_NOT_FOUND));
+        version.setQuantity_in_stock(version.getQuantity_in_stock()+request.getChange_amount());
+        versionRepository.save(version);
+        inventory.setEvent(Even_Type.IMPORT.name());
+        inventory.setCreateat(LocalDateTime.now());
+        inventory.setVersion(version);
+
+        return inventoryMapper.toInventoryResponse(inventoryRepository.save(inventory));
     }
     public InventoryResponse SaleStatus(String idinventory){
         Inventory inventory=inventoryRepository.findById(idinventory).

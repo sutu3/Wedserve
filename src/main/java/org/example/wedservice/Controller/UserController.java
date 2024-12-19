@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.example.wedservice.Dto.Request.SizeRequest;
+import org.example.wedservice.Dto.Request.UserAvataRequest;
 import org.example.wedservice.Dto.Request.UserRequest;
 import org.example.wedservice.Dto.Response.ApiResponse;
 import org.example.wedservice.Dto.Response.SizeResponse;
@@ -66,6 +67,16 @@ public class UserController {
     @PutMapping("/{id}")
     public ApiResponse<UserResponse> putUser(@PathVariable String id, @RequestBody User_Update update)
             {
+        return ApiResponse.<UserResponse>builder()
+                .Result(userService.putUser(id, update))
+                .code(0)
+                .message("Completed")
+                .success(true)
+                .build();
+    }
+    @PutMapping("/upload/{id}")
+    public ApiResponse<UserResponse> putUserImage(@PathVariable String id, @RequestBody UserAvataRequest update)
+    {
         return ApiResponse.<UserResponse>builder()
                 .Result(userService.putUser(id, update))
                 .code(0)

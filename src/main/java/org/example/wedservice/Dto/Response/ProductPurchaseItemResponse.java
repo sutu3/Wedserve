@@ -5,9 +5,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -15,14 +14,17 @@ import java.time.LocalDateTime;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Purchase_ItemResponse implements Serializable {
-    String idpurchaseitem;
-    int quantity;
-    String idpurchase;
-    PurchaseResponseNoListItem purchase;
-    VersionProductResponse version;
-    BigDecimal totalprice;
-    BigDecimal purchaseprice;
+public class ProductPurchaseItemResponse implements Serializable {
+    String id;
+    String name;
+    MaterialResponse materials;
+    CategoryResponse category;
+    GenderResponse gender;
+    List<VarientNoListResponse> varients;
+    List<DescriptionResponse> descriptions;
+    ImageResponse image;
     LocalDateTime createat;
+    LocalDateTime deleteat;
     LocalDateTime updateat;
+    boolean isdeleted;
 }

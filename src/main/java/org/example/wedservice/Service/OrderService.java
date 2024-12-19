@@ -5,14 +5,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.example.wedservice.Dto.Request.OrderResquest;
 import org.example.wedservice.Dto.Response.OrderResponse;
-import org.example.wedservice.Entity.Order_Item;
+import org.example.wedservice.Dto.Response.OrderWithUserResponse;
 import org.example.wedservice.Entity.Orders;
+import org.example.wedservice.Entity.Shipping;
 import org.example.wedservice.Enum.OrderStatus;
 import org.example.wedservice.Exception.AppException;
 import org.example.wedservice.Exception.ErrorCode;
 import org.example.wedservice.Form.Order_Update;
 import org.example.wedservice.Mapper.OrderMapper;
 import org.example.wedservice.Repository.OrderRepository;
+import org.example.wedservice.Repository.ShippingRepository;
 import org.example.wedservice.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +30,10 @@ public class OrderService {
     OrderRepository orderRepository;
     OrderMapper orderMapper;
     private final UserRepository userRepository;
+    private final ShippingRepository shippingRepository;
 
-    public List<OrderResponse> getall(){
-        return orderRepository.findAll().stream().map(orderMapper::tOrderResponse)
+    public List<OrderWithUserResponse> getall(){
+        return orderRepository.findAll().stream().map(orderMapper::tOrderWithUserResponse)
                 .collect(Collectors.toList());
     }
    public OrderResponse getbyid(String id) {
@@ -42,8 +45,40 @@ public class OrderService {
                 .orElseThrow(()->new AppException(ErrorCode.ORDER_NOT_FOUND));
         order.setStatus(OrderStatus.CONFIRMED.name());
         order.setTotalamount(resquest.getTotalamoung());
+        order.setOrderdate(LocalDateTime.now());
         order.setUpdatedat(LocalDateTime.now());
-        return orderMapper.tOrderResponse(orderRepository.save(order));
+        Orders orderUpdate=orderRepository.save(order);
+        Shipping shipping=new Shipping();
+        shipping.setOrder(orderUpdate);
+        shipping.setStatus(OrderStatus.CONFIRMED.name());
+        shipping.setCreatedat(LocalDateTime.now());
+        shippingRepository.save(shipping);
+
+        return orderMapper.tOrderResponse(orderUpdate);
+    }
+    public OrderWithUserResponse changeStatusShipping(String id){
+        Orders order=orderRepository.findById(id)
+                .orElseThrow(()->new AppException(ErrorCode.ORDER_NOT_FOUND));
+        order.setStatus(OrderStatus.SHIPPED.name());
+        Shipping shipping=new Shipping();
+        shipping.setOrder(order);
+        shipping.setStatus(OrderStatus.SHIPPED.name());
+        shipping.setCreatedat(LocalDateTime.now());
+        shippingRepository.save(shipping);
+
+        return orderMapper.tOrderWithUserResponse(order);
+    }
+    public OrderResponse changeStatusDelivered(String id){
+        Orders order=orderRepository.findById(id)
+                .orElseThrow(()->new AppException(ErrorCode.ORDER_NOT_FOUND));
+        order.setStatus(OrderStatus.DELIVERED.name());
+        Shipping shipping=new Shipping();
+        shipping.setOrder(order);
+        shipping.setStatus(OrderStatus.DELIVERED.name());
+        shipping.setCreatedat(LocalDateTime.now());
+        shippingRepository.save(shipping);
+
+        return orderMapper.tOrderResponse(order);
     }
     public OrderResponse postOrder(OrderResquest request){
         return orderMapper.tOrderResponse(orderRepository.save(Orders.builder()

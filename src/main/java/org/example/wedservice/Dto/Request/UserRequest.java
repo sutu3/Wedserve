@@ -21,8 +21,5 @@ public class UserRequest {
     String password;
     String email;
     String phonenumber;
-    String fullname;
-    String gender;
-    LocalDate dob;
     List<String> roles;
 }

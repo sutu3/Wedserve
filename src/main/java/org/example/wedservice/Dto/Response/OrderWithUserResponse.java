@@ -1,9 +1,7 @@
 package org.example.wedservice.Dto.Response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.example.wedservice.Entity.Order_Item;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -15,13 +13,14 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class OrderResponse implements Serializable {
+public class OrderWithUserResponse implements Serializable {
     String idorder;
     String status;
     LocalDateTime orderdate;
     BigDecimal totalamount;
     List<ShippingResponse> shippings;
     List<OrderItemResponse> orderitems;
+    UserResponseNoList user;
     LocalDateTime createdat;
     LocalDateTime updatedat;
     LocalDateTime deletedat;

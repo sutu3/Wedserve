@@ -1,25 +1,28 @@
-package org.example.wedservice.Form;
-
+package org.example.wedservice.Dto.Response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.example.wedservice.Dto.Response.Purchase_ItemResponse;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User_Update {
+@NoArgsConstructor
+public class UserResponseNoList {
+    String iduser;
+    String username;
     String email;
     String phonenumber;
     String fullname;
     String gender;
+    String avatar;
     String address;
-    String city;
     String district;
+    String city;
+
 }

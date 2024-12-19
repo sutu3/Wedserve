@@ -5,10 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.example.wedservice.Entity.User;
-import org.example.wedservice.Enum.Role;
-import org.example.wedservice.Exception.AppException;
+import org.example.wedservice.Enum.RoleEnum;
 import org.example.wedservice.Repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +29,7 @@ public class ApplicationInitConfig {
             // Initial data setup
             if(userRepository.findByUsername("admin").isEmpty()) {
                 HashSet<String> roles=new HashSet<String>();
-                roles.add(Role.ADMIN.name());
+                roles.add(RoleEnum.ADMIN.name());
                 User user=User.builder()
                         .username("admin")
                         .password(passwordEncoder.encode("admin"))

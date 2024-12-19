@@ -72,7 +72,6 @@ public class ProductController {
                 descriptions.get(0).getIdproduct(),
                 descriptionResponses
         );
-
         return ApiResponse.<ProductResponse>builder()
                 .Result(productResponse)
                 .code(0)

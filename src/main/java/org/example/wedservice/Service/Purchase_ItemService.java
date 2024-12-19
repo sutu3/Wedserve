@@ -8,6 +8,7 @@ import org.example.wedservice.Dto.Request.Purchase_ItemRequest;
 import org.example.wedservice.Dto.Response.Purchase_ItemResponse;
 import org.example.wedservice.Entity.Purchase;
 import org.example.wedservice.Entity.Purchase_Item;
+import org.example.wedservice.Entity.Varient;
 import org.example.wedservice.Entity.Version;
 import org.example.wedservice.Enum.StatusPurchase;
 import org.example.wedservice.Exception.AppException;
@@ -17,6 +18,7 @@ import org.example.wedservice.Mapper.PurchaseMapper;
 import org.example.wedservice.Mapper.Purchase_itemMapper;
 import org.example.wedservice.Repository.PurchaseRepository;
 import org.example.wedservice.Repository.Purchase_ItemRepository;
+import org.example.wedservice.Repository.VarientRepository;
 import org.example.wedservice.Repository.VersionRepository;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,7 @@ public class Purchase_ItemService {
     PurchaseMapper purchaseMapper;
     PurchaseService purchaseService;
     VersionRepository versionRepository;
+    private final VarientRepository varientRepository;
 
     public List<Purchase_ItemResponse> getall() {
         return purchaseItemRepository.findAll().stream()
@@ -54,23 +57,23 @@ public class Purchase_ItemService {
         Purchase purchase = purchaseRepository.findById(
                 request.getIdpurchase()).orElseThrow(() -> new AppException
                 (ErrorCode.PURCHASE_NOT_FOUND));
-        BigDecimal amount = purchase.getAlamoung();
-        Version version = versionRepository.findById(request.getIdVersion())
-                .orElseThrow(() -> new AppException(ErrorCode.VERSION_NOT_FOUND));
-        BigDecimal quantity = new BigDecimal(request.getQuantity());
+        BigDecimal amount = purchase.getTotalamoung();
+        Varient varient=varientRepository.findFirstByProduct_NameAndColor_colornameAndSize_Sizename(request.getProductname(), request.getColor() ,request.getSize());
+
+        Version version = versionRepository.findFirstByIsdeletedFalseAndVarient_Idvariant(varient.getIdvariant());
+
+        /*BigDecimal quantity = new BigDecimal(request.getQuantity());
         BigDecimal totalAmount = quantity.multiply(version.getOriginalprice());
         BigDecimal updatedAmount = amount.add(totalAmount);
         purchase.setAlamoung(updatedAmount);
-        purchaseRepository.save(purchase);
+        purchaseRepository.save(purchase);*/
         Purchase_Item purchase_item = purchaseItemRepository.save(purchaseItem.builder()
                 .purchase(purchase)
-                .purchaseprice(request.getPurchaseprice())
                 .createat(LocalDateTime.now())
                 .quantity(request.getQuantity())
                 .totalprice(version.getOriginalprice())
                 .version(version)
                 .build());
-        log.info(request.getPurchaseprice().getClass().getSimpleName() + request.getPurchaseprice());
         List<Purchase_Item> items = (purchaseRepository.findById(request.getIdpurchase())
                 .get().getItems());
         List<Purchase_Item> combinedItems = new ArrayList<>(items); // Use HashSet to avoid duplicates
@@ -97,10 +100,11 @@ public class Purchase_ItemService {
                 purchaseItemRepository.save(purchase_item));
     }
 
-    public void DeletePurchase_Item(String id) {
-        if (!purchaseRepository.existsById(id)) {
+    public String DeletePurchase_Item(String id) {
+        if (!purchaseItemRepository.existsById(id)) {
             throw new AppException(ErrorCode.PURCHASE_NOT_FOUND);
         }
         purchaseItemRepository.deleteById(id);
+        return id;
     }
 }

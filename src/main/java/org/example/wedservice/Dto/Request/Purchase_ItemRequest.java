@@ -21,6 +21,7 @@ import java.time.LocalDate;
 public class Purchase_ItemRequest implements Serializable {
     int quantity;
     String idpurchase;
-    BigDecimal purchaseprice;
-    String idVersion;
+    String color;
+    String size;
+    String productname;
 }

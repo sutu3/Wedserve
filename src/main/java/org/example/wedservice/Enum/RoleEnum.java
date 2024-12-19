@@ -1,5 +1,5 @@
 package org.example.wedservice.Enum;
 
-public enum Role {
+public enum RoleEnum {
     ADMIN,USER
 }

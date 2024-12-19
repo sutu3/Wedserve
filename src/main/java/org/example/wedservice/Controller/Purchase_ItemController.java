@@ -61,9 +61,9 @@ public class Purchase_ItemController {
                 .build();
     }
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteCategory(@PathVariable String id){
-        purchaseItemService.DeletePurchase_Item(id);
-        return ApiResponse.<Void>builder()
+    public ApiResponse<String> deleteCategory(@PathVariable String id){
+        return ApiResponse.<String>builder()
+                .Result(purchaseItemService.DeletePurchase_Item(id))
                 .message("Delete Completed")
                 .code(0)
                 .success(true)

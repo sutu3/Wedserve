@@ -15,7 +15,6 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface Purchase_itemMapper {
     Purchase_Item toPurchaseItem(Purchase_ItemRequest request);
-    @Mapping(source = "idpurchaseitem", target = "id") // Ánh xạ idMaterial của entity với id của DTO
     Purchase_ItemResponse toPurchase_ItemResponse(Purchase_Item purchase_item);
     void updatePurchase_Item(@MappingTarget Purchase_Item item, Purchase_Item_Update update);
 }

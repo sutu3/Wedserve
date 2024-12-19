@@ -4,26 +4,21 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.example.wedservice.Dto.Request.MaterialRequest;
 import org.example.wedservice.Dto.Request.PurchaseRequest;
-import org.example.wedservice.Dto.Response.MaterialResponse;
 import org.example.wedservice.Dto.Response.PurchaseResponse;
-import org.example.wedservice.Entity.Material;
 import org.example.wedservice.Entity.Purchase;
 import org.example.wedservice.Entity.Purchase_Item;
 import org.example.wedservice.Enum.StatusPurchase;
 import org.example.wedservice.Exception.AppException;
 import org.example.wedservice.Exception.ErrorCode;
-import org.example.wedservice.Form.Material_Update;
 import org.example.wedservice.Form.Purchase_Update;
 import org.example.wedservice.Mapper.PurchaseMapper;
 import org.example.wedservice.Repository.PurchaseRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,11 +41,10 @@ public class PurchaseService {
     public PurchaseResponse PostPurchase(PurchaseRequest request) {
         Purchase purchase= purchaseMapper.toPurchase(request);
         log.info(LocalDateTime.now().toString());
-        ;
         return purchaseMapper.toPurchaseResponse(purchaseRepository.save(
                 purchase.builder()
                         .status(StatusPurchase.Created)
-                        .alamoung(purchase.getAlamoung())
+                        .totalamoung(purchase.getTotalamoung())
                         .createat(LocalDateTime.now())
                         .build()));
     }
@@ -63,7 +57,16 @@ public class PurchaseService {
     public PurchaseResponse putPurchase(String id, Purchase_Update update) {
         Purchase purchase= purchaseRepository.findById(id).
                 orElseThrow(()->new AppException(ErrorCode.PURCHASE_NOT_FOUND));
+        purchase.setStatus(StatusPurchase.Pending);
+        purchase.setTotalamoung(BigDecimal.valueOf(update.getTotalamoung()));
         purchaseMapper.updateMaterial(purchase,update);
+        purchase.setUpdateat(LocalDateTime.now());
+        return purchaseMapper.toPurchaseResponse(purchaseRepository.save(purchase));
+    }
+    public PurchaseResponse importPurchase(String id) {
+        Purchase purchase= purchaseRepository.findById(id).
+                orElseThrow(()->new AppException(ErrorCode.PURCHASE_NOT_FOUND));
+        purchase.setStatus(StatusPurchase.Completed);
         purchase.setUpdateat(LocalDateTime.now());
         return purchaseMapper.toPurchaseResponse(purchaseRepository.save(purchase));
     }
